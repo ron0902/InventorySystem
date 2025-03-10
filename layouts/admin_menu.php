@@ -7,6 +7,15 @@
   </li>
   <li>
     <a href="#" class="submenu-toggle">
+      <i class="glyphicon glyphicon-folder-open"></i>
+      <span>Records</span>
+    </a>
+    <ul class="nav submenu">
+      <li><a href="supplierdetails.php">Supplier Management </a> </li>
+   </ul>
+  </li>
+  <li>
+    <a href="#" class="submenu-toggle">
       <i class="glyphicon glyphicon-user"></i>
       <span>Purchase Management</span>
     </a>
