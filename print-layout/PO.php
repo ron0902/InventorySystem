@@ -16,6 +16,11 @@ if (isset($_GET['id'])) {
     $session->msg('d', 'Missing purchase order ID.');
     redirect('../manage_po.php', false);
 }
+
+// Function to convert number to words
+function convert_number_to_words($number) {
+    // ... (paste the function code here)
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -99,23 +104,23 @@ if (isset($_GET['id'])) {
                 <th>Amount</th>
             </tr>
 
-           <!-- Items List -->
-<?php if (!empty($items) && count($items) > 0): ?>
-    <?php foreach ($items as $item): ?>
-        <tr>
-            <td><?php echo remove_junk($item['stock_property_no']); ?></td>
-            <td><?php echo remove_junk($item['unit']); ?></td>
-            <td><?php echo remove_junk($item['description']); ?></td>
-            <td><?php echo remove_junk($item['quantity']); ?></td>
-            <td><?php echo remove_junk($item['unit_cost']); ?></td>
-            <td><?php echo remove_junk($item['amount']); ?></td>
-        </tr>
-    <?php endforeach; ?>
-<?php else: ?>
-    <tr>
-        <td colspan="6">No items found for this purchase order.</td>
-    </tr>
-<?php endif; ?>
+            <!-- Items List -->
+            <?php if (!empty($items) && count($items) > 0): ?>
+                <?php foreach ($items as $item): ?>
+                    <tr>
+                        <td><?php echo remove_junk($item['stock_property_no']); ?></td>
+                        <td><?php echo remove_junk($item['unit']); ?></td>
+                        <td><?php echo remove_junk($item['description']); ?></td>
+                        <td><?php echo remove_junk($item['quantity']); ?></td>
+                        <td><?php echo remove_junk($item['unit_cost']); ?></td>
+                        <td><?php echo remove_junk($item['amount']); ?></td>
+                    </tr>
+                <?php endforeach; ?>
+            <?php else: ?>
+                <tr>
+                    <td colspan="6">No items found for this purchase order.</td>
+                </tr>
+            <?php endif; ?>
 
             <!-- Grand Total and Purpose -->
             <tr>
@@ -124,7 +129,16 @@ if (isset($_GET['id'])) {
             </tr>
             <tr>
                 <td colspan="5">Total Amount in Words:</td>
-                <td><?php echo remove_junk($po_data['total_amount_words']); ?></td>
+                <td>
+                    <?php
+                    if (!empty($po_data['total_amount_words'])) {
+                        echo remove_junk($po_data['total_amount_words']);
+                    } else {
+                        // Calculate total amount in words dynamically
+                        echo convert_number_to_words($po_data['total_amount']);
+                    }
+                    ?>
+                </td>
             </tr>
             <tr>
                 <td colspan="5">Purpose:</td>
@@ -163,6 +177,8 @@ if (isset($_GET['id'])) {
                 <td colspan="3">Funds Available: <?php echo remove_junk($po_data['funds_available']); ?></td>
                 <td colspan="3">Amount: <?php echo remove_junk($po_data['total_amount']); ?></td>
             </tr>
+            
+
             <tr>
                 <td colspan="6" style="text-align: center;"><strong>(Certified Funds Available)</strong></td>
             </tr>
