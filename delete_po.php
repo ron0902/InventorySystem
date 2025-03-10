@@ -47,4 +47,4 @@ if (isset($_GET['id'])) {
   $session->msg("d", "Missing purchase order ID.");
   redirect('manage_po.php');
 }
-?>
+?>sss
