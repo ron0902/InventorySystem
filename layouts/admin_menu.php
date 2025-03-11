@@ -12,6 +12,7 @@
     </a>
     <ul class="nav submenu">
       <li><a href="supplierdetails.php">Supplier Management </a> </li>
+      <li><a href="teacherdetails.php">Teacher Management </a> </li>
    </ul>
   </li>
   <li>
