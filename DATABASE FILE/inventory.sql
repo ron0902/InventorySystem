@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 04, 2025 at 07:49 PM
+-- Generation Time: Mar 11, 2025 at 07:29 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -52,6 +52,27 @@ CREATE TABLE `media` (
   `file_name` varchar(255) NOT NULL,
   `file_type` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `offices`
+--
+
+CREATE TABLE `offices` (
+  `id` int(11) NOT NULL,
+  `name` varchar(100) NOT NULL,
+  `contact_number` varchar(20) DEFAULT NULL,
+  `email` varchar(100) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `offices`
+--
+
+INSERT INTO `offices` (`id`, `name`, `contact_number`, `email`, `created_at`) VALUES
+(1, 'Principal Office', '01234567890', 'admin@gmail.com', '2025-03-11 18:18:03');
 
 -- --------------------------------------------------------
 
@@ -110,8 +131,7 @@ CREATE TABLE `purchase_orders` (
 --
 
 INSERT INTO `purchase_orders` (`po_id`, `supplier_name`, `address`, `tin`, `po_number`, `date`, `mode_of_procurement`, `place_of_delivery`, `delivery_term`, `payment_term`, `total_amount`, `total_amount_words`, `confirm_supplier`, `confirm_date`, `head_of_procurement`, `fund_cluster`, `funds_available`, `ors_burs_no`, `date_of_ors_burs`, `purpose`) VALUES
-(3, '213', '12312', '32131', '', '2025-03-05', '', 'New Society National High School, General Santos City', 'within 30 days', 'Auto Debit Account', 4058244.00, 'four million, fifty-eight thousand, two hundred and forty-four', '12', '2025-03-05', '31231', '3123', 123123.00, '123123', '0002-12-31', NULL),
-(4, '3213', '213', '12312', '3123', '2025-03-13', 'ey', 'New Society National High School, General Santos City', 'within 30 days', 'Auto Debit Account', 99999999.99, 'one billion, thirty-three million, eight hundred and eighty-nine thousand, eight hundred and thirty-two', '331313', '2025-03-05', '2313', '3123123123', 3123123.00, '12312312321', '2025-03-17', '3132');
+(8, '123', '321', '3123', '321', '2025-03-11', '321', '3213', '321', '321', 5336.00, 'Five Thousand, Three Hundred and Thirty-Six', '32131', '2025-03-12', '321', '32', 32.00, '321321', '2025-03-11', '1312');
 
 -- --------------------------------------------------------
 
@@ -135,10 +155,7 @@ CREATE TABLE `purchase_order_items` (
 --
 
 INSERT INTO `purchase_order_items` (`order_id`, `po_id`, `stock_property_no`, `unit`, `description`, `quantity`, `unit_cost`, `amount`) VALUES
-(5, 3, '', '123123', '123123', 3213, 1231.00, 3955203.00),
-(6, 3, '', '3213', '321', 321, 321.00, 103041.00),
-(7, 4, '', '1231', '3123', 123, 12312.00, 1514376.00),
-(8, 4, '', '32131', '3123', 321312, 3213.00, 99999999.99);
+(14, 8, '8001', '32', '3', 23, 232.00, 5336.00);
 
 -- --------------------------------------------------------
 
@@ -164,7 +181,7 @@ CREATE TABLE `purchase_requests` (
 --
 
 INSERT INTO `purchase_requests` (`request_id`, `user_id`, `entity_name`, `fund_cluster`, `office_section`, `pr_no`, `date_requested`, `responsibility_center_code`, `purpose`, `status`) VALUES
-(30, 1, '3123', '213', '131', '3123', '2025-03-04', 1312, '312321', '');
+(31, 1, '23', '232', '434', '54', '2025-03-06', 565, '662342', '');
 
 -- --------------------------------------------------------
 
@@ -187,7 +204,55 @@ CREATE TABLE `purchase_request_items` (
 --
 
 INSERT INTO `purchase_request_items` (`id`, `purchase_request_id`, `item_description`, `unit`, `quantity`, `unit_cost`, `total_cost`) VALUES
-(13, 30, '3', '13', 123, 21312.00, 2621376.00);
+(14, 31, '31', '3123', 3123, 12312.00, 38450376.00),
+(15, 31, '3213', '3123', 3123, 31231.00, 97534413.00),
+(16, 31, '3123', '312', 312, 3123.00, 974376.00),
+(17, 31, '3123', '123', 312, 131231.00, 40944072.00);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `suppliers`
+--
+
+CREATE TABLE `suppliers` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `address` varchar(255) DEFAULT NULL,
+  `contact_number` varchar(20) DEFAULT NULL,
+  `email` varchar(100) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `suppliers`
+--
+
+INSERT INTO `suppliers` (`id`, `name`, `address`, `contact_number`, `email`, `created_at`) VALUES
+(3, '213123123', '312312131', '23233213', '123132322@gmail.com', '2025-03-11 16:09:13');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `teachers`
+--
+
+CREATE TABLE `teachers` (
+  `id` int(11) NOT NULL,
+  `name` varchar(100) NOT NULL,
+  `address` varchar(255) DEFAULT NULL,
+  `contact_number` varchar(20) DEFAULT NULL,
+  `email` varchar(100) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `office_id` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `teachers`
+--
+
+INSERT INTO `teachers` (`id`, `name`, `address`, `contact_number`, `email`, `created_at`, `office_id`) VALUES
+(1, 'ron', 'prk 2 sto nino apopong', '01234567890', 'ron@gmail.com', '2025-03-11 18:21:45', 1);
 
 -- --------------------------------------------------------
 
@@ -211,9 +276,9 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `username`, `password`, `user_level`, `image`, `status`, `last_login`) VALUES
-(1, 'Jm', 'Admin', 'd033e22ae348aeb5660fc2140aec35850c4da997', 1, 'icbdya3s1.png', 1, '2025-03-04 18:42:58'),
+(1, 'Jm', 'Admin', 'd033e22ae348aeb5660fc2140aec35850c4da997', 1, 'icbdya3s1.png', 1, '2025-03-06 16:56:19'),
 (2, 'John Walker', 'special', 'ba36b97a41e7faf742ab09bf88405ac04f99599a', 2, 'no_image.png', 1, '2025-03-04 18:42:47'),
-(3, 'Christopher', 'User', '12dea96fec20593566ab75692c9949596833adc9', 3, 'no_image.png', 1, '2025-03-04 18:42:20'),
+(3, 'Christopher', 'User', '12dea96fec20593566ab75692c9949596833adc9', 3, 'no_image.png', 1, '2025-03-06 16:56:05'),
 (5, 'Kevin', 'kevin', '5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8', 3, 'no_image.png', 1, '2021-04-04 19:54:29');
 
 -- --------------------------------------------------------
@@ -257,6 +322,12 @@ ALTER TABLE `media`
   ADD KEY `id` (`id`);
 
 --
+-- Indexes for table `offices`
+--
+ALTER TABLE `offices`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `products`
 --
 ALTER TABLE `products`
@@ -293,6 +364,19 @@ ALTER TABLE `purchase_request_items`
   ADD KEY `purchase_request_id` (`purchase_request_id`);
 
 --
+-- Indexes for table `suppliers`
+--
+ALTER TABLE `suppliers`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `teachers`
+--
+ALTER TABLE `teachers`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_office` (`office_id`);
+
+--
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
@@ -323,6 +407,12 @@ ALTER TABLE `media`
   MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `offices`
+--
+ALTER TABLE `offices`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
@@ -332,25 +422,37 @@ ALTER TABLE `products`
 -- AUTO_INCREMENT for table `purchase_orders`
 --
 ALTER TABLE `purchase_orders`
-  MODIFY `po_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `po_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `purchase_order_items`
 --
 ALTER TABLE `purchase_order_items`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `purchase_requests`
 --
 ALTER TABLE `purchase_requests`
-  MODIFY `request_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `request_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT for table `purchase_request_items`
 --
 ALTER TABLE `purchase_request_items`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+
+--
+-- AUTO_INCREMENT for table `suppliers`
+--
+ALTER TABLE `suppliers`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `teachers`
+--
+ALTER TABLE `teachers`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `users`
@@ -391,6 +493,12 @@ ALTER TABLE `purchase_requests`
 --
 ALTER TABLE `purchase_request_items`
   ADD CONSTRAINT `purchase_request_items_ibfk_1` FOREIGN KEY (`purchase_request_id`) REFERENCES `purchase_requests` (`request_id`);
+
+--
+-- Constraints for table `teachers`
+--
+ALTER TABLE `teachers`
+  ADD CONSTRAINT `fk_office` FOREIGN KEY (`office_id`) REFERENCES `offices` (`id`) ON DELETE SET NULL;
 
 --
 -- Constraints for table `users`
