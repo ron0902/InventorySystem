@@ -61,7 +61,7 @@
       </a>
       <ul class="nav submenu">
         <li><a href="">Yearly Reports </a></li>
-        <li><a href="">Monthly Reports</a></li>
+        <li><a href="stock_report.php">Monthly Reports</a></li>
         <li><a href="">Daily Reports</a> </li>
       </ul>
   </li>
