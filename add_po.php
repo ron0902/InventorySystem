@@ -211,7 +211,7 @@ if (isset($_POST['add_purchase_order'])) {
       // Commit transaction if everything is successful
       $db->query("COMMIT");
       $session->msg('s', "Purchase order added successfully.");
-      redirect('purchase_orders.php', false);
+      redirect('add_po.php', false);
     } else {
       $db->query("ROLLBACK");
       $session->msg('d', 'Failed to add purchase order!');
