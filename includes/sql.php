@@ -210,10 +210,10 @@ function tableExists($table){
    /*--------------------------------------------------------------*/
    function join_product_table(){
     global $db;
-    $sql  = "SELECT p.id, p.name, p.quantity, p.unit_cost, p.date, c.name AS categorie";
+    $sql  = "SELECT p.product_id, p.name, p.quantity, p.unit_cost, p.date, c.name AS categorie";
     $sql .= " FROM products p";
     $sql .= " LEFT JOIN categories c ON c.id = p.categorie_id";
-    $sql .= " ORDER BY p.id ASC";
+    $sql .= " ORDER BY p.product_id ASC";
     return find_by_sql($sql);
 }
   /*--------------------------------------------------------------*/
@@ -258,10 +258,10 @@ function tableExists($table){
   /*--------------------------------------------------------------*/
   function find_recent_product_added($limit){
     global $db;
-    $sql   = " SELECT p.id,p.name,c.name AS categorie";
+    $sql   = " SELECT p.product_id,p.name,c.name AS categorie";
     $sql  .= " FROM products p";
     $sql  .= " LEFT JOIN categories c ON c.id = p.categorie_id";
-    $sql  .= " ORDER BY p.id DESC LIMIT ".$db->escape((int)$limit);
+    $sql  .= " ORDER BY p.product_id DESC LIMIT ".$db->escape((int)$limit);
     return find_by_sql($sql);
  }
  /*--------------------------------------------------------------*/
@@ -271,7 +271,7 @@ function tableExists($table){
     global $db;
     $sql  = " SELECT pr.request_id, pr.product_id, pr.quantity, pr.requested_by, pr.request_date, p.name AS product_name";
     $sql .= " FROM purchase_requests pr";
-    $sql .= " LEFT JOIN products p ON p.id = pr.product_id";
+    $sql .= " LEFT JOIN products p ON p.product_id = pr.product_id";
     $sql .= " ORDER BY pr.request_id DESC LIMIT ".$db->escape((int)$limit);
     return find_by_sql($sql);
   }
@@ -289,4 +289,8 @@ function find_items_by_po_id($po_id) {
   $sql  = "SELECT * FROM purchase_order_items WHERE po_id='{$db->escape($po_id)}'";
   return find_by_sql($sql);
 }
+/*--------------------------------------------------------------*/
+/* Function for finding a single row by column and value
+/*--------------------------------------------------------------*/
+
 ?>
