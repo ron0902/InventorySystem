@@ -54,14 +54,14 @@ function delete_by_id($table,$id)
 /*--------------------------------------------------------------*/
 /* Function for Count id  By table name
 /*--------------------------------------------------------------*/
-
-function count_by_id($table){
+function count_by_id($table) {
   global $db;
-  if(tableExists($table))
-  {
-    $sql    = "SELECT COUNT(id) AS total FROM ".$db->escape($table);
+  if (tableExists($table)) {
+    // Replace 'id' with the correct primary key column name, e.g., 'product_id'
+    $primary_key_column = ($table === 'products') ? 'product_id' : 'id';
+    $sql = "SELECT COUNT({$primary_key_column}) AS total FROM " . $db->escape($table);
     $result = $db->query($sql);
-     return($db->fetch_assoc($result));
+    return ($db->fetch_assoc($result));
   }
 }
 /*--------------------------------------------------------------*/
