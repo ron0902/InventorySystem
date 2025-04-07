@@ -18,6 +18,16 @@
   <li>
     <a href="#" class="submenu-toggle">
       <i class="glyphicon glyphicon-user"></i>
+      <span>Accounts Payable</span>
+    </a>
+    <ul class="nav submenu">
+      <li><a href="accountspayable.php">Add Accounts Payable </a> 
+    </li>
+   </ul>
+  </li>
+  <li>
+    <a href="#" class="submenu-toggle">
+      <i class="glyphicon glyphicon-user"></i>
       <span>Purchase Management</span>
     </a>
     <ul class="nav submenu">
