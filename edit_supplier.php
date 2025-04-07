@@ -5,27 +5,27 @@ require_once('includes/load.php');
 page_require_level(1);
 
 // Fetch supplier data
-$supplier = find_by_id('suppliers', (int)$_GET['id']);
+$supplier = find_by_id('suppliers', (int)$_GET['supplier_id']);
 if (!$supplier) {
     $session->msg("d", "Missing supplier id.");
     redirect('supplierdetails.php');
 }
 
 if (isset($_POST['edit_supplier'])) {
-  $req_fields = array('supplier-name', 'supplier-address', 'contact_number', 'supplier-email'); // Updated to 'contact_number'
+  $req_fields = array('supplier-name', 'supplier-address', 'contact_number', 'supplier-email');
   validate_fields($req_fields);
 
   // Sanitize and escape input data
   $name = remove_junk($db->escape($_POST['supplier-name']));
   $address = remove_junk($db->escape($_POST['supplier-address']));
-  $contact_number = remove_junk($db->escape($_POST['contact_number'])); // Updated to 'contact_number'
+  $contact_number = remove_junk($db->escape($_POST['contact_number']));
   $email = remove_junk($db->escape($_POST['supplier-email']));
 
   if (empty($errors)) {
       // Update the SQL query to include new fields
       $sql = "UPDATE suppliers SET ";
       $sql .= "name='{$name}', address='{$address}', contact_number='{$contact_number}', email='{$email}' ";
-      $sql .= "WHERE id='{$supplier['id']}'";
+      $sql .= "WHERE supplier_id='{$supplier['supplier_id']}'"; // Use 'supplier_id' here
 
       $result = $db->query($sql);
       if ($result && $db->affected_rows() === 1) {
@@ -57,7 +57,7 @@ if (isset($_POST['edit_supplier'])) {
                 </strong>
             </div>
             <div class="panel-body">
-                <form method="post" action="edit_supplier.php?id=<?php echo (int)$supplier['id']; ?>">
+                <form method="post" action="edit_supplier.php?id=<?php echo (int)$supplier['supplier_id']; ?>">
                     <div class="form-group">
                         <label for="supplier-name">Supplier Name</label>
                         <input type="text" class="form-control" name="supplier-name" value="<?php echo remove_junk(ucfirst($supplier['name'])); ?>">
