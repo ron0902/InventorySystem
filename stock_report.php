@@ -44,7 +44,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit_report'])) {
     </div>
 </div>
 
-<!-- Form for Submitting Stock Reports -->
+<!-- Mao ni Form para Mo Submit og Report -->
 <div class="row">
     <div class="col-md-6">
         <div class="panel panel-default">
