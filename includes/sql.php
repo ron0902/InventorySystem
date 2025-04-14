@@ -24,11 +24,12 @@ function find_by_sql($sql)
 /*--------------------------------------------------------------*/
 /*  Function for Find data from table by id
 /*--------------------------------------------------------------*/
-function find_by_id($table, $id) {
+function find_by_id($table, $id, $column = 'id') {
   global $db;
-  $primary_key_column = ($table === 'products') ? 'product_id' : (($table === 'suppliers') ? 'supplier_id' : 'id');
-  $sql = "SELECT * FROM {$table} WHERE {$primary_key_column} = '{$id}' LIMIT 1";
-  return $db->query($sql)->fetch_assoc();
+  $id = (int)$id;
+  $sql = "SELECT * FROM {$db->escape($table)} WHERE {$db->escape($column)} = '{$db->escape($id)}' LIMIT 1";
+  $result = $db->query($sql);
+  return ($result && $db->num_rows($result) > 0) ? $db->fetch_assoc($result) : null;
 }
 /*--------------------------------------------------------------*/
 /* Function for Delete data from table by id
@@ -286,63 +287,4 @@ function find_items_by_po_id($po_id) {
 /* Function for finding a single row by column and value
 /*--------------------------------------------------------------*/
 
-
-
-// Function to check if Purchase Order and Invoice match
-function check_order_completeness($po_id, $invoice_id) {
-  global $db;  
-
-  $po_sql = "SELECT * FROM purchase_orders WHERE po_id = '{$po_id}'";
-  $po_result = $db->query($po_sql);
-
-  if ($po_result && $po_result->num_rows > 0) {
-      $po_details = $po_result->fetch_assoc();
-
-      // Fetch Invoice details
-      $invoice_sql = "SELECT * FROM invoices WHERE invoice_id = '{$invoice_id}'";
-      $invoice_result = $db->query($invoice_sql);
-
-      if ($invoice_result && $invoice_result->num_rows > 0) {
-          $invoice_details = $invoice_result->fetch_assoc();
-          if ($po_details['po_no'] === $invoice_details['po_no'] && 
-              $po_details['total_cost'] === $invoice_details['total_cost']) {
-              // Now check if all items in the invoice match the PO
-              $po_items_sql = "SELECT * FROM po_items WHERE po_id = '{$po_id}'";
-              $invoice_items_sql = "SELECT * FROM invoice_items WHERE invoice_id = '{$invoice_id}'";
-              
-              $po_items = $db->query($po_items_sql);
-              $invoice_items = $db->query($invoice_items_sql);
-
-              if ($po_items && $invoice_items && $po_items->num_rows == $invoice_items->num_rows) {
-                  $match = true;
-
-                  while ($po_item = $po_items->fetch_assoc()) {
-                      $invoice_item = $invoice_items->fetch_assoc();
-                      
-                      // Check if item descriptions and quantities match
-                      if ($po_item['item_id'] !== $invoice_item['item_id'] ||
-                          $po_item['quantity'] !== $invoice_item['quantity']) {
-                          $match = false;
-                          break;
-                      }
-                  }
-
-                  if ($match) {
-                      return "Order is complete"; // Items match, order is complete
-                  } else {
-                      return "Order is not complete - Items mismatch"; // Items do not match
-                  }
-              } else {
-                  return "Order is not complete - Items count mismatch"; // Mismatch in number of items
-              }
-          } else {
-              return "Order is not complete - PO and Invoice totals do not match"; // PO and Invoice total do not match
-          }
-      } else {
-          return "Invoice not found"; // Invoice doesn't exist
-      }
-  } else {
-      return "Purchase Order not found"; // PO doesn't exist
-  }
-}
 ?>
