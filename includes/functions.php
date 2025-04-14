@@ -120,7 +120,17 @@ function randString($length = 5)
   return $str;
 }
 
-
-
+function get_status($ap) {
+  $current_date = date('Y-m-d');
+  if ($ap['status'] === 'Pending' && $ap['due_date'] < $current_date) {
+      return 'Overdue';
+  } elseif ($ap['status'] === 'Pending') {
+      return 'Approved';
+  } elseif ($ap['status'] === 'Approved') {
+      return 'Paid';
+  } else {
+      return $ap['status']; // Return the current status if no change is needed
+  }
+}
 
 ?>
