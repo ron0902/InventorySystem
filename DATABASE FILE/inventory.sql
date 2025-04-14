@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 09, 2025 at 01:05 PM
+-- Generation Time: Apr 14, 2025 at 07:37 PM
 -- Server version: 10.4.32-MariaDB
--- PHP Version: 8.2.12
+-- PHP Version: 8.0.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -30,20 +30,20 @@ SET time_zone = "+00:00";
 CREATE TABLE `accounts_payable` (
   `ap_id` int(11) NOT NULL,
   `supplier_id` int(11) NOT NULL,
-  `invoice_number` varchar(100) NOT NULL,
+  `invoice_id` int(11) NOT NULL,
   `amount` decimal(10,2) NOT NULL,
   `due_date` date NOT NULL,
-  `status` enum('pending','paid','overdue') DEFAULT 'pending',
+  `status` varchar(20) NOT NULL DEFAULT 'Pending',
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `order_id` int(11) NOT NULL
+  `po_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `accounts_payable`
 --
 
-INSERT INTO `accounts_payable` (`ap_id`, `supplier_id`, `invoice_number`, `amount`, `due_date`, `status`, `created_at`, `order_id`) VALUES
-(3, 3, '32', 3445.00, '3223-03-31', 'pending', '2025-04-07 05:28:40', 12);
+INSERT INTO `accounts_payable` (`ap_id`, `supplier_id`, `invoice_id`, `amount`, `due_date`, `status`, `created_at`, `po_id`) VALUES
+(10, 3, 3, 1000.00, '2025-04-16', 'Approved', '2025-04-14 17:25:09', 13);
 
 -- --------------------------------------------------------
 
@@ -63,6 +63,56 @@ CREATE TABLE `categories` (
 INSERT INTO `categories` (`id`, `name`) VALUES
 (16, 'Equipments'),
 (15, 'Supplies');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `invoices`
+--
+
+CREATE TABLE `invoices` (
+  `invoice_id` int(11) NOT NULL,
+  `invoice_number` varchar(50) DEFAULT NULL,
+  `po_id` int(11) DEFAULT NULL,
+  `supplier_id` int(11) DEFAULT NULL,
+  `amount` decimal(10,2) DEFAULT NULL,
+  `due_date` date DEFAULT NULL,
+  `status` varchar(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `invoices`
+--
+
+INSERT INTO `invoices` (`invoice_id`, `invoice_number`, `po_id`, `supplier_id`, `amount`, `due_date`, `status`) VALUES
+(2, '304', 12, 3, 5000.00, '2025-04-14', NULL),
+(3, '304', 13, 3, 1000.00, '2025-04-15', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `invoice_items`
+--
+
+CREATE TABLE `invoice_items` (
+  `invoice_item_id` int(11) NOT NULL,
+  `invoice_id` int(11) NOT NULL,
+  `order_id` int(11) NOT NULL,
+  `po_id` int(11) NOT NULL,
+  `stock_property_no` varchar(100) DEFAULT NULL,
+  `unit` varchar(50) DEFAULT NULL,
+  `description` text DEFAULT NULL,
+  `quantity` int(11) NOT NULL,
+  `unit_cost` decimal(10,2) DEFAULT NULL,
+  `amount` decimal(10,2) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `invoice_items`
+--
+
+INSERT INTO `invoice_items` (`invoice_item_id`, `invoice_id`, `order_id`, `po_id`, `stock_property_no`, `unit`, `description`, `quantity`, `unit_cost`, `amount`) VALUES
+(1, 3, 0, 13, '13001', '14', 'Plywood', 10, 100.00, 1000.00);
 
 -- --------------------------------------------------------
 
@@ -95,6 +145,7 @@ CREATE TABLE `offices` (
 --
 
 INSERT INTO `offices` (`id`, `name`, `contact_number`, `email`, `created_at`) VALUES
+(0, '213', '23', '434@gmail.com', '2025-04-07 04:16:07'),
 (0, '213', '23', '434@gmail.com', '2025-04-07 04:16:07');
 
 -- --------------------------------------------------------
@@ -147,7 +198,8 @@ CREATE TABLE `purchase_orders` (
 --
 
 INSERT INTO `purchase_orders` (`po_id`, `supplier_name`, `address`, `tin`, `po_number`, `date`, `mode_of_procurement`, `place_of_delivery`, `delivery_term`, `payment_term`, `total_amount`, `total_amount_words`, `confirm_supplier`, `confirm_date`, `head_of_procurement`, `fund_cluster`, `funds_available`, `ors_burs_no`, `date_of_ors_burs`, `purpose`) VALUES
-(12, 'ron', '323', '34', 'PO_123', '2025-04-14', '321312', '34543', '456', '6', 190530.00, 'One Hundred and Ninety Thousand, Five Hundred and Thirty', '6767', '7567-05-06', '657', '567', 567.00, '7657', '0023-07-06', '3424');
+(12, 'ron', '323', '34', 'PO_123', '2025-04-14', '321312', '34543', '456', '6', 190530.00, 'One Hundred and Ninety Thousand, Five Hundred and Thirty', '6767', '7567-05-06', '657', '567', 567.00, '7657', '0023-07-06', '3424'),
+(13, 'ron', 'Baranggay sinawal', '0902', 'PO_123', '2025-04-15', 'None', 'New Society national high school', 'none', 'cash', 1000.00, 'One Thousand', 'Yes', '2025-04-16', 'NOne', '3213', 232321.00, '32131', '2025-04-15', 'Building Cr');
 
 -- --------------------------------------------------------
 
@@ -171,7 +223,8 @@ CREATE TABLE `purchase_order_items` (
 --
 
 INSERT INTO `purchase_order_items` (`order_id`, `po_id`, `stock_property_no`, `unit`, `description`, `quantity`, `unit_cost`, `amount`) VALUES
-(20, 12, '12001', '65', '34', 45, 4234.00, 190530.00);
+(20, 12, '12001', '65', '34', 45, 4234.00, 190530.00),
+(21, 13, '13001', '14', 'Plywood', 10, 100.00, 1000.00);
 
 -- --------------------------------------------------------
 
@@ -280,6 +333,7 @@ CREATE TABLE `teachers` (
 --
 
 INSERT INTO `teachers` (`id`, `name`, `address`, `contact_number`, `email`, `created_at`, `office_id`) VALUES
+(0, '32123', '32', '32', '434@gmail.com', '2025-04-07 04:16:21', 0),
 (0, '32123', '32', '32', '434@gmail.com', '2025-04-07 04:16:21', 0);
 
 -- --------------------------------------------------------
@@ -304,7 +358,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `username`, `password`, `user_level`, `image`, `status`, `last_login`) VALUES
-(1, 'Jm', 'Admin', 'd033e22ae348aeb5660fc2140aec35850c4da997', 1, 'icbdya3s1.png', 1, '2025-04-09 12:43:54'),
+(1, 'Jm', 'Admin', 'd033e22ae348aeb5660fc2140aec35850c4da997', 1, 'icbdya3s1.png', 1, '2025-04-14 16:39:28'),
 (2, 'John Walker', 'special', 'ba36b97a41e7faf742ab09bf88405ac04f99599a', 2, 'no_image.png', 1, '2025-03-04 18:42:47'),
 (3, 'Christopher', 'User', '12dea96fec20593566ab75692c9949596833adc9', 3, 'no_image.png', 1, '2025-03-04 18:42:20'),
 (5, 'Kevin', 'kevin', '5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8', 3, 'no_image.png', 1, '2021-04-04 19:54:29');
@@ -340,8 +394,9 @@ INSERT INTO `user_groups` (`id`, `group_name`, `group_level`, `group_status`) VA
 --
 ALTER TABLE `accounts_payable`
   ADD PRIMARY KEY (`ap_id`),
-  ADD KEY `order_id` (`order_id`),
-  ADD KEY `supplier_id` (`supplier_id`);
+  ADD KEY `order_id` (`po_id`),
+  ADD KEY `supplier_id` (`supplier_id`),
+  ADD KEY `invoice_id` (`invoice_id`);
 
 --
 -- Indexes for table `categories`
@@ -349,6 +404,22 @@ ALTER TABLE `accounts_payable`
 ALTER TABLE `categories`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `name` (`name`);
+
+--
+-- Indexes for table `invoices`
+--
+ALTER TABLE `invoices`
+  ADD PRIMARY KEY (`invoice_id`),
+  ADD KEY `po_id` (`po_id`),
+  ADD KEY `supplier_id` (`supplier_id`);
+
+--
+-- Indexes for table `invoice_items`
+--
+ALTER TABLE `invoice_items`
+  ADD PRIMARY KEY (`invoice_item_id`),
+  ADD KEY `invoice_id` (`invoice_id`),
+  ADD KEY `po_id` (`po_id`);
 
 --
 -- Indexes for table `media`
@@ -430,13 +501,25 @@ ALTER TABLE `user_groups`
 -- AUTO_INCREMENT for table `accounts_payable`
 --
 ALTER TABLE `accounts_payable`
-  MODIFY `ap_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `ap_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `categories`
 --
 ALTER TABLE `categories`
   MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+
+--
+-- AUTO_INCREMENT for table `invoices`
+--
+ALTER TABLE `invoices`
+  MODIFY `invoice_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `invoice_items`
+--
+ALTER TABLE `invoice_items`
+  MODIFY `invoice_item_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `media`
@@ -454,13 +537,13 @@ ALTER TABLE `products`
 -- AUTO_INCREMENT for table `purchase_orders`
 --
 ALTER TABLE `purchase_orders`
-  MODIFY `po_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `po_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `purchase_order_items`
 --
 ALTER TABLE `purchase_order_items`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT for table `purchase_requests`
@@ -506,8 +589,23 @@ ALTER TABLE `user_groups`
 -- Constraints for table `accounts_payable`
 --
 ALTER TABLE `accounts_payable`
-  ADD CONSTRAINT `accounts_payable_ibfk_2` FOREIGN KEY (`order_id`) REFERENCES `purchase_orders` (`po_id`),
-  ADD CONSTRAINT `accounts_payable_ibfk_3` FOREIGN KEY (`supplier_id`) REFERENCES `suppliers` (`supplier_id`);
+  ADD CONSTRAINT `accounts_payable_ibfk_2` FOREIGN KEY (`po_id`) REFERENCES `purchase_orders` (`po_id`),
+  ADD CONSTRAINT `accounts_payable_ibfk_3` FOREIGN KEY (`supplier_id`) REFERENCES `suppliers` (`supplier_id`),
+  ADD CONSTRAINT `accounts_payable_ibfk_4` FOREIGN KEY (`invoice_id`) REFERENCES `invoices` (`invoice_id`);
+
+--
+-- Constraints for table `invoices`
+--
+ALTER TABLE `invoices`
+  ADD CONSTRAINT `invoices_ibfk_1` FOREIGN KEY (`po_id`) REFERENCES `purchase_orders` (`po_id`),
+  ADD CONSTRAINT `invoices_ibfk_2` FOREIGN KEY (`supplier_id`) REFERENCES `suppliers` (`supplier_id`);
+
+--
+-- Constraints for table `invoice_items`
+--
+ALTER TABLE `invoice_items`
+  ADD CONSTRAINT `invoice_items_ibfk_1` FOREIGN KEY (`invoice_id`) REFERENCES `invoices` (`invoice_id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `invoice_items_ibfk_2` FOREIGN KEY (`po_id`) REFERENCES `purchase_orders` (`po_id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `products`
