@@ -22,6 +22,7 @@
     </a>
     <ul class="nav submenu">
       <li><a href="accountspayable.php">Add Accounts Payable </a> 
+      <li><a href="invoice.php">Invoices </a> 
     </li>
    </ul>
   </li>
