@@ -121,7 +121,13 @@ function randString($length = 5)
 }
 
 function get_status($ap) {
-  $current_date = date('Y-m-d');
+  $current_date = date('Y-m-d'); // Current date in 'YYYY-MM-DD' format
+  $due_date = date('Y-m-d', strtotime($ap['due_date'])); // Convert AP due date to 'YYYY-MM-DD'
+
+if ($ap['status'] === 'Pending' && $due_date < $current_date) {
+    return 'Overdue';
+}
+  // Compare dates for overdue status
   if ($ap['status'] === 'Pending' && $ap['due_date'] < $current_date) {
       return 'Overdue';
   } elseif ($ap['status'] === 'Pending') {
@@ -132,5 +138,6 @@ function get_status($ap) {
       return $ap['status']; // Return the current status if no change is needed
   }
 }
+
 
 ?>
