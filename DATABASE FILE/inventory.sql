@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 03, 2025 at 10:09 AM
+-- Generation Time: May 03, 2025 at 05:41 PM
 -- Server version: 10.4.32-MariaDB
--- PHP Version: 8.2.12
+-- PHP Version: 8.0.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -38,6 +38,14 @@ CREATE TABLE `accounts_payable` (
   `po_id` int(11) NOT NULL,
   `balance` decimal(10,2) NOT NULL DEFAULT 0.00
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `accounts_payable`
+--
+
+INSERT INTO `accounts_payable` (`ap_id`, `supplier_id`, `invoice_id`, `amount`, `due_date`, `status`, `created_at`, `po_id`, `balance`) VALUES
+(13, 3, 7, 1250.00, '2025-05-30', 'Paid', '2025-05-03 15:01:32', 14, 0.00),
+(14, 3, 8, 25000.00, '2025-05-09', 'Paid', '2025-05-03 15:25:35', 15, 0.00);
 
 -- --------------------------------------------------------
 
@@ -74,6 +82,14 @@ CREATE TABLE `invoices` (
   `status` varchar(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `invoices`
+--
+
+INSERT INTO `invoices` (`invoice_id`, `invoice_number`, `po_id`, `supplier_id`, `amount`, `due_date`, `status`) VALUES
+(7, '304', 14, 3, 1250.00, '2025-05-09', NULL),
+(8, '203', 15, 3, 25000.00, '2025-05-07', NULL);
+
 -- --------------------------------------------------------
 
 --
@@ -107,6 +123,15 @@ CREATE TABLE `ledger` (
   `balance` decimal(10,2) NOT NULL,
   `transaction_date` datetime DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `ledger`
+--
+
+INSERT INTO `ledger` (`ledger_id`, `ap_id`, `transaction_type`, `amount`, `balance`, `transaction_date`) VALUES
+(2, 13, 'Payment', 1250.00, 0.00, '2025-05-03 23:18:40'),
+(3, 14, 'Payment', 20000.00, 5000.00, '2025-05-03 23:25:51'),
+(4, 14, 'Payment', 5000.00, 0.00, '2025-05-03 23:26:10');
 
 -- --------------------------------------------------------
 
@@ -187,6 +212,14 @@ CREATE TABLE `purchase_orders` (
   `purpose` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `purchase_orders`
+--
+
+INSERT INTO `purchase_orders` (`po_id`, `supplier_name`, `address`, `tin`, `po_number`, `date`, `mode_of_procurement`, `place_of_delivery`, `delivery_term`, `payment_term`, `total_amount`, `total_amount_words`, `confirm_supplier`, `confirm_date`, `head_of_procurement`, `fund_cluster`, `funds_available`, `ors_burs_no`, `date_of_ors_burs`, `purpose`) VALUES
+(14, 'ron', 'Baranggay sinawal', '30', 'PO-01', '2025-05-03', 'None', 'New Society national high school', 'within 30 days', 'Auto Debit Account', 1250.00, 'One Thousand, Two Hundred and Fifty', 'Ron', '2025-05-04', 'Principal', '23', 23.00, '23', '2025-05-03', 'Black Board'),
+(15, 'ron', 'Baranggay sinawal', '0902', 'PO-02', '2025-05-03', '43', 'New Society national high school', 'within 30 days', 'Auto Debit Account', 25000.00, 'Twenty-Five Thousand', 'Ron', '2025-05-04', 'Principal', '3213', 232321.00, '32131', '2025-05-04', 'Chair');
+
 -- --------------------------------------------------------
 
 --
@@ -204,6 +237,15 @@ CREATE TABLE `purchase_order_items` (
   `amount` decimal(10,2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `purchase_order_items`
+--
+
+INSERT INTO `purchase_order_items` (`order_id`, `po_id`, `stock_property_no`, `unit`, `description`, `quantity`, `unit_cost`, `amount`) VALUES
+(22, 14, '14001', '1', 'Ply wood', 1, 500.00, 500.00),
+(23, 14, '14002', '5', 'Paint', 5, 150.00, 750.00),
+(24, 15, '15001', '500', 'Chair', 500, 50.00, 25000.00);
+
 -- --------------------------------------------------------
 
 --
@@ -212,7 +254,6 @@ CREATE TABLE `purchase_order_items` (
 
 CREATE TABLE `purchase_requests` (
   `request_id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
   `entity_name` varchar(250) NOT NULL,
   `fund_cluster` varchar(250) NOT NULL,
   `office_section` varchar(250) NOT NULL,
@@ -222,6 +263,14 @@ CREATE TABLE `purchase_requests` (
   `purpose` text NOT NULL,
   `status` enum('Approve','Rejected') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `purchase_requests`
+--
+
+INSERT INTO `purchase_requests` (`request_id`, `entity_name`, `fund_cluster`, `office_section`, `pr_no`, `date_requested`, `responsibility_center_code`, `purpose`, `status`) VALUES
+(34, 'New Society National High School', '23', '34', 'PR-01', '2025-05-03', 78, 'Black Board ', ''),
+(35, 'New Society National High School', '3213', '12312', 'PR-02', '2025-05-03', 123123, 'Chair', '');
 
 -- --------------------------------------------------------
 
@@ -238,6 +287,15 @@ CREATE TABLE `purchase_request_items` (
   `unit_cost` decimal(10,2) NOT NULL,
   `total_cost` decimal(10,2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `purchase_request_items`
+--
+
+INSERT INTO `purchase_request_items` (`id`, `purchase_request_id`, `item_description`, `unit`, `quantity`, `unit_cost`, `total_cost`) VALUES
+(20, 34, 'Ply wood', '1', 1, 500.00, 500.00),
+(21, 34, 'Paint', '5', 5, 150.00, 750.00),
+(22, 35, 'Chair', '500', 500, 50.00, 25000.00);
 
 -- --------------------------------------------------------
 
@@ -425,8 +483,7 @@ ALTER TABLE `purchase_order_items`
 --
 ALTER TABLE `purchase_requests`
   ADD PRIMARY KEY (`request_id`),
-  ADD KEY `pr_no` (`pr_no`),
-  ADD KEY `user_id` (`user_id`);
+  ADD KEY `pr_no` (`pr_no`);
 
 --
 -- Indexes for table `purchase_request_items`
@@ -472,7 +529,7 @@ ALTER TABLE `user_groups`
 -- AUTO_INCREMENT for table `accounts_payable`
 --
 ALTER TABLE `accounts_payable`
-  MODIFY `ap_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `ap_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `categories`
@@ -484,7 +541,7 @@ ALTER TABLE `categories`
 -- AUTO_INCREMENT for table `invoices`
 --
 ALTER TABLE `invoices`
-  MODIFY `invoice_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `invoice_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `invoice_items`
@@ -496,7 +553,7 @@ ALTER TABLE `invoice_items`
 -- AUTO_INCREMENT for table `ledger`
 --
 ALTER TABLE `ledger`
-  MODIFY `ledger_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ledger_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `media`
@@ -514,25 +571,25 @@ ALTER TABLE `products`
 -- AUTO_INCREMENT for table `purchase_orders`
 --
 ALTER TABLE `purchase_orders`
-  MODIFY `po_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `po_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `purchase_order_items`
 --
 ALTER TABLE `purchase_order_items`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT for table `purchase_requests`
 --
 ALTER TABLE `purchase_requests`
-  MODIFY `request_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+  MODIFY `request_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 
 --
 -- AUTO_INCREMENT for table `purchase_request_items`
 --
 ALTER TABLE `purchase_request_items`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT for table `stock_report`
@@ -601,12 +658,6 @@ ALTER TABLE `products`
 --
 ALTER TABLE `purchase_order_items`
   ADD CONSTRAINT `purchase_order_items_ibfk_1` FOREIGN KEY (`po_id`) REFERENCES `purchase_orders` (`po_id`);
-
---
--- Constraints for table `purchase_requests`
---
-ALTER TABLE `purchase_requests`
-  ADD CONSTRAINT `purchase_requests_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user_groups` (`id`);
 
 --
 -- Constraints for table `purchase_request_items`
