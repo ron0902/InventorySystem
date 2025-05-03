@@ -18,6 +18,9 @@ if (!$ap) {
 
 // Fetch ledger entries for the specified Accounts Payable ID
 $ledger_entries = find_by_sql("SELECT * FROM ledger WHERE ap_id = '{$ap_id}' ORDER BY transaction_date DESC");
+
+// Debugging: Log the query results
+error_log("Ledger entries for AP ID {$ap_id}: " . json_encode($ledger_entries));
 ?>
 
 <?php include_once('layouts/header.php'); ?>
