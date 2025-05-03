@@ -3,13 +3,11 @@ $page_title = 'Add Purchase Request';
 require_once 'includes/load.php';
 
 page_require_level(2);
-$all_departments = find_all('departments');
-$all_users = find_all('users'); 
 ?>
 
 <?php
 if (isset($_POST['add_purchase_request'])) {
-    $req_fields = ['user_id', 'entity_name', 'fund_cluster', 'office_section', 'pr_no', 'responsibility_center_code', 'purpose'];
+    $req_fields = ['entity_name', 'fund_cluster', 'office_section', 'pr_no', 'responsibility_center_code', 'purpose'];
     validate_fields($req_fields);
 
     $errors = [];
@@ -26,14 +24,6 @@ if (isset($_POST['add_purchase_request'])) {
     }
 
     if (empty($errors)) {
-        $user_id = isset($_POST['user_id']) && !empty($_POST['user_id']) ? remove_junk($db->escape($_POST['user_id'])) : null;
-        
-        // Ensure user_id is not empty
-        if (!$user_id) {
-            $session->msg('d', "Invalid User.");
-            redirect('add_pr.php', false);
-        }
-
         $entity_name = remove_junk($db->escape($_POST['entity_name']));
         $fund_cluster = remove_junk($db->escape($_POST['fund_cluster']));
         $office_section = remove_junk($db->escape($_POST['office_section']));
@@ -46,8 +36,8 @@ if (isset($_POST['add_purchase_request'])) {
         $db->query("START TRANSACTION");
 
         // Insert purchase request
-        $query = "INSERT INTO purchase_requests (user_id, entity_name, fund_cluster, office_section, pr_no, responsibility_center_code, purpose, date_requested, status) 
-                  VALUES ('{$user_id}', '{$entity_name}', '{$fund_cluster}', '{$office_section}', '{$pr_no}', '{$responsibility_center_code}', '{$purpose}', '{$date_requested}', 'Pending')";
+        $query = "INSERT INTO purchase_requests (entity_name, fund_cluster, office_section, pr_no, responsibility_center_code, purpose, date_requested, status) 
+                  VALUES ('{$entity_name}', '{$fund_cluster}', '{$office_section}', '{$pr_no}', '{$responsibility_center_code}', '{$purpose}', '{$date_requested}', 'Pending')";
         
         if ($db->query($query)) {
             $purchase_request_id = $db->insert_id();
@@ -108,16 +98,6 @@ if (isset($_POST['add_purchase_request'])) {
             </div>
             <div class="panel-body">
                 <form method="post" action="add_pr.php" class="clearfix">
-                    <div class="form-group">
-                        <select class="form-control" name="user_id">
-                            <option value="">Select User</option>
-                            <?php foreach ($all_users as $user): ?>
-                                <option value="<?php echo (int)$user['id'] ?>" <?php if(isset($_POST['user_id']) && $_POST['user_id'] == $user['id']) echo "selected"; ?>>
-                                    <?php echo $user['name'] ?>
-                                </option>
-                            <?php endforeach; ?>
-                        </select>
-                    </div>
                     <div class="form-group">
                         <input type="text" class="form-control" name="entity_name" placeholder="Entity Name">
                     </div>
