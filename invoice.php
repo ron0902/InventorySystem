@@ -33,14 +33,17 @@ if (isset($_POST['add_invoice'])) {
     validate_fields($req_fields);
 
     if (empty($errors)) {
-        $item_descriptions = $_POST['item-description'];
-        $stock_property_nos = $_POST['stock-property-no'];
-        $units = $_POST['unit'];
-        $quantities = $_POST['quantity'];
-        $unit_costs = $_POST['unit-cost'];
-        $amounts = $_POST['amount'];
+        // Initialize arrays to avoid undefined array key warnings
+        $item_descriptions = isset($_POST['item-description']) ? $_POST['item-description'] : [];
+        $stock_property_nos = isset($_POST['stock-property-no']) ? $_POST['stock-property-no'] : [];
+        $units = isset($_POST['unit']) ? $_POST['unit'] : [];
+        $quantities = isset($_POST['quantity']) ? $_POST['quantity'] : [];
+        $unit_costs = isset($_POST['unit-cost']) ? $_POST['unit-cost'] : [];
+        $amounts = isset($_POST['amount']) ? $_POST['amount'] : [];
 
         $invalid_amounts = false;
+
+        // Validate amounts
         foreach ($amounts as $index => $amt) {
             if (trim($amt) === '' || !is_numeric($amt)) {
                 $invalid_amounts = true;
@@ -61,17 +64,20 @@ if (isset($_POST['add_invoice'])) {
             if ($db->query($sql)) {
                 $invoice_id = $db->insert_id;
 
-                for ($i = 0; $i < count($item_descriptions); $i++) {
-                    $item_description = remove_junk($db->escape($item_descriptions[$i]));
-                    $stock_property_no = remove_junk($db->escape($stock_property_nos[$i]));
-                    $unit = remove_junk($db->escape($units[$i]));
-                    $quantity = (int)$quantities[$i];
-                    $unit_cost = (float)$unit_costs[$i];
-                    $amount = (float)$amounts[$i];
+                // Insert items only if arrays are not empty
+                if (!empty($item_descriptions)) {
+                    for ($i = 0; $i < count($item_descriptions); $i++) {
+                        $item_description = remove_junk($db->escape($item_descriptions[$i]));
+                        $stock_property_no = remove_junk($db->escape($stock_property_nos[$i]));
+                        $unit = remove_junk($db->escape($units[$i]));
+                        $quantity = (int)$quantities[$i];
+                        $unit_cost = (float)$unit_costs[$i];
+                        $amount = (float)$amounts[$i];
 
-                    $sql_item = "INSERT INTO invoice_items (invoice_id, po_id, stock_property_no, unit, description, quantity, unit_cost, amount) 
-                                 VALUES ('{$invoice_id}', '{$po_id}', '{$stock_property_no}', '{$unit}', '{$item_description}', '{$quantity}', '{$unit_cost}', '{$amount}')";
-                    $db->query($sql_item);
+                        $sql_item = "INSERT INTO invoice_items (invoice_id, po_id, stock_property_no, unit, description, quantity, unit_cost, amount) 
+                                     VALUES ('{$invoice_id}', '{$po_id}', '{$stock_property_no}', '{$unit}', '{$item_description}', '{$quantity}', '{$unit_cost}', '{$amount}')";
+                        $db->query($sql_item);
+                    }
                 }
 
                 $session->msg("s", "Invoice and items added successfully.");
@@ -81,11 +87,11 @@ if (isset($_POST['add_invoice'])) {
                 redirect('invoice.php');
             }
         } else {
-            $session->msg("d", $errors);
+            $session->msg("d", implode("<br>", $errors));
             redirect('invoice.php');
         }
     } else {
-        $session->msg("d", $errors);
+        $session->msg("d", implode("<br>", $errors));
         redirect('invoice.php');
     }
 }
