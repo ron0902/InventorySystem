@@ -31,12 +31,18 @@ if (isset($_POST['add_ap'])) {
         if ($db->query($query)) {
             $new_ap_id = $db->insert_id;
 
-            // Log the initial entry in the ledger
-            $log_sql = "INSERT INTO ledger (ap_id, transaction_type, amount, balance) 
-                        VALUES ('{$new_ap_id}', 'Initial Entry', '{$amount}', '{$amount}')";
-            $db->query($log_sql);
-
-            $session->msg("s", "Accounts Payable added successfully!");
+            if ($new_ap_id) {
+                // Log the initial entry in the ledger
+                $log_sql = "INSERT INTO ledger (ap_id, transaction_type, amount, balance, transaction_date) 
+                            VALUES ('{$new_ap_id}', 'Initial Entry', '{$amount}', '{$amount}', NOW())";
+                if ($db->query($log_sql)) {
+                    $session->msg("s", "Accounts Payable added successfully!");
+                } else {
+                    $session->msg("d", "Failed to log the initial entry in the ledger.");
+                }
+            } else {
+                $session->msg("d", "Failed to retrieve the last inserted ID.");
+            }
             redirect('accountspayable.php', false);
         } else {
             $session->msg("d", "Failed to add Accounts Payable.");
@@ -82,11 +88,20 @@ if (isset($_POST['make_payment'])) {
         $sql = "UPDATE accounts_payable SET balance = '{$new_balance}' WHERE ap_id = '{$ap_id}'";
         if ($db->query($sql)) {
             // Log the payment in the ledger
-            $log_sql = "INSERT INTO ledger (ap_id, transaction_type, amount, balance) 
-                        VALUES ('{$ap_id}', 'Payment', '{$payment_amount}', '{$new_balance}')";
-            $db->query($log_sql);
-
-            $session->msg("s", "Payment applied successfully!");
+            $log_sql = "INSERT INTO ledger (ap_id, transaction_type, amount, balance, transaction_date) 
+                        VALUES ('{$ap_id}', 'Payment', '{$payment_amount}', '{$new_balance}', NOW())";
+            if ($db->query($log_sql)) {
+                // Automatically update the status based on the new balance
+                $new_status = ($new_balance == 0) ? 'Paid' : 'Pending';
+                $update_status_sql = "UPDATE accounts_payable SET status = '{$new_status}' WHERE ap_id = '{$ap_id}'";
+                if ($db->query($update_status_sql)) {
+                    $session->msg("s", "Payment applied successfully and status updated to {$new_status}!");
+                } else {
+                    $session->msg("d", "Payment applied, but failed to update status.");
+                }
+            } else {
+                $session->msg("d", "Failed to log the payment in the ledger.");
+            }
         } else {
             $session->msg("d", "Failed to apply payment.");
         }
@@ -188,6 +203,54 @@ if (isset($_GET['check_status'])) {
             </div>
         </div>
     </div>
+</div>
+
+<!-- Make a Payment Form -->
+<div class="row">
+    <div class="col-md-6">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <strong>
+                    <span class="glyphicon glyphicon-th"></span>
+                    <span>Make a Payment</span>
+                </strong>
+            </div>
+            <div class="panel-body">
+                <form method="post" action="accountspayable.php">
+                    <div class="form-group">
+                        <label for="supplier-id">Filter by Supplier</label>
+                        <select class="form-control" name="supplier-id" id="supplier-id" onchange="filterAccountsPayable(this.value)">
+                            <option value="">Select Supplier</option>
+                            <?php foreach ($all_suppliers as $supplier): ?>
+                                <option value="<?php echo (int)$supplier['supplier_id']; ?>">
+                                    <?php echo remove_junk(ucfirst($supplier['name'])); ?>
+                                </option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="ap_id">Accounts Payable</label>
+                        <select class="form-control" name="ap_id" id="ap_id" required>
+                            <option value="">Select Accounts Payable</option>
+                            <?php
+                            $accounts_payable = find_all('accounts_payable');
+                            foreach ($accounts_payable as $ap): ?>
+                                <option value="<?php echo (int)$ap['ap_id']; ?>">
+                                    <?php echo "AP ID: {$ap['ap_id']} - Balance: {$ap['balance']}"; ?>
+                                </option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="payment-amount">Payment Amount</label>
+                        <input type="number" class="form-control" name="payment-amount" placeholder="Enter Payment Amount" required>
+                    </div>
+                    <button type="submit" name="make_payment" class="btn btn-primary">Submit Payment</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 </div>
 
 <!-- List of Accounts Payable -->
