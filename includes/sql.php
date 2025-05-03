@@ -24,12 +24,10 @@ function find_by_sql($sql)
 /*--------------------------------------------------------------*/
 /*  Function for Find data from table by id
 /*--------------------------------------------------------------*/
-function find_by_id($table, $id, $column = null) {
+function find_by_id($table, $id, $column = 'id') {
   global $db;
   $id = (int)$id;
-  // Dynamically determine the primary key column
-  $primary_key_column = $column ?? (($table === 'accounts_payable') ? 'ap_id' : 'id');
-  $sql = "SELECT * FROM {$db->escape($table)} WHERE {$db->escape($primary_key_column)} = '{$db->escape($id)}' LIMIT 1";
+  $sql = "SELECT * FROM {$db->escape($table)} WHERE {$db->escape($column)} = '{$db->escape($id)}' LIMIT 1";
   $result = $db->query($sql);
   return ($result && $db->num_rows($result) > 0) ? $db->fetch_assoc($result) : null;
 }
