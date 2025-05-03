@@ -169,19 +169,19 @@ function convert_number_to_words($number) {
 
             <!-- Funding Details -->
             <tr>
-                <td colspan="2">Fund Cluster: <?php echo remove_junk($po_data['fund_cluster']); ?></td>
-                <td colspan="2">ORS/BURS No.: <?php echo remove_junk($po_data['ors_burs_no']); ?></td>
-                <td colspan="2">Date of the ORS/BURS: <?php echo read_date($po_data['date_of_ors_burs']); ?></td>
-            </tr>
-            <tr>
-                <td colspan="3">Funds Available: <?php echo remove_junk($po_data['funds_available']); ?></td>
-                <td colspan="3">Amount: <?php echo remove_junk($po_data['total_amount']); ?></td>
-            </tr>
-            
-
-            <tr>
-                <td colspan="6" style="text-align: center;"><strong>(Certified Funds Available)</strong></td>
-            </tr>
+    <td colspan="3">
+        <strong>Fund Cluster:</strong> <?php echo remove_junk($po_data['fund_cluster']); ?><br>
+        <strong>Funds Available:</strong> <?php echo remove_junk($po_data['funds_available']); ?>
+    </td>
+    <td colspan="3">
+        <strong>ORS/BURS No.:</strong> <?php echo remove_junk($po_data['ors_burs_no']); ?><br>
+        <strong>Date of the ORS/BURS:</strong> <?php echo read_date($po_data['date_of_ors_burs']); ?><br>
+        <strong>Amount:</strong> <?php echo remove_junk($po_data['total_amount']); ?>
+    </td>
+</tr>
+<tr>
+    <td colspan="6" style="text-align: center;"><strong>(Certified Funds Available)</strong></td>
+</tr>
         </table>
     </div>
 </body>
