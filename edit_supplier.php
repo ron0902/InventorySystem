@@ -5,7 +5,7 @@ require_once('includes/load.php');
 page_require_level(1);
 
 // Fetch supplier data
-$supplier = find_by_id('suppliers', (int)$_GET['supplier_id']);
+$supplier = find_by_id('suppliers', (int)$_GET['supplier_id'], 'supplier_id');
 if (!$supplier) {
     $session->msg("d", "Missing supplier id.");
     redirect('supplierdetails.php');
