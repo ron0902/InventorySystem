@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 14, 2025 at 07:37 PM
+-- Generation Time: May 03, 2025 at 10:09 AM
 -- Server version: 10.4.32-MariaDB
--- PHP Version: 8.0.30
+-- PHP Version: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -35,15 +35,9 @@ CREATE TABLE `accounts_payable` (
   `due_date` date NOT NULL,
   `status` varchar(20) NOT NULL DEFAULT 'Pending',
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `po_id` int(11) NOT NULL
+  `po_id` int(11) NOT NULL,
+  `balance` decimal(10,2) NOT NULL DEFAULT 0.00
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `accounts_payable`
---
-
-INSERT INTO `accounts_payable` (`ap_id`, `supplier_id`, `invoice_id`, `amount`, `due_date`, `status`, `created_at`, `po_id`) VALUES
-(10, 3, 3, 1000.00, '2025-04-16', 'Approved', '2025-04-14 17:25:09', 13);
 
 -- --------------------------------------------------------
 
@@ -80,14 +74,6 @@ CREATE TABLE `invoices` (
   `status` varchar(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `invoices`
---
-
-INSERT INTO `invoices` (`invoice_id`, `invoice_number`, `po_id`, `supplier_id`, `amount`, `due_date`, `status`) VALUES
-(2, '304', 12, 3, 5000.00, '2025-04-14', NULL),
-(3, '304', 13, 3, 1000.00, '2025-04-15', NULL);
-
 -- --------------------------------------------------------
 
 --
@@ -107,12 +93,20 @@ CREATE TABLE `invoice_items` (
   `amount` decimal(10,2) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+-- --------------------------------------------------------
+
 --
--- Dumping data for table `invoice_items`
+-- Table structure for table `ledger`
 --
 
-INSERT INTO `invoice_items` (`invoice_item_id`, `invoice_id`, `order_id`, `po_id`, `stock_property_no`, `unit`, `description`, `quantity`, `unit_cost`, `amount`) VALUES
-(1, 3, 0, 13, '13001', '14', 'Plywood', 10, 100.00, 1000.00);
+CREATE TABLE `ledger` (
+  `ledger_id` int(11) NOT NULL,
+  `ap_id` int(11) NOT NULL,
+  `transaction_type` varchar(50) NOT NULL,
+  `amount` decimal(10,2) NOT NULL,
+  `balance` decimal(10,2) NOT NULL,
+  `transaction_date` datetime DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -193,14 +187,6 @@ CREATE TABLE `purchase_orders` (
   `purpose` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `purchase_orders`
---
-
-INSERT INTO `purchase_orders` (`po_id`, `supplier_name`, `address`, `tin`, `po_number`, `date`, `mode_of_procurement`, `place_of_delivery`, `delivery_term`, `payment_term`, `total_amount`, `total_amount_words`, `confirm_supplier`, `confirm_date`, `head_of_procurement`, `fund_cluster`, `funds_available`, `ors_burs_no`, `date_of_ors_burs`, `purpose`) VALUES
-(12, 'ron', '323', '34', 'PO_123', '2025-04-14', '321312', '34543', '456', '6', 190530.00, 'One Hundred and Ninety Thousand, Five Hundred and Thirty', '6767', '7567-05-06', '657', '567', 567.00, '7657', '0023-07-06', '3424'),
-(13, 'ron', 'Baranggay sinawal', '0902', 'PO_123', '2025-04-15', 'None', 'New Society national high school', 'none', 'cash', 1000.00, 'One Thousand', 'Yes', '2025-04-16', 'NOne', '3213', 232321.00, '32131', '2025-04-15', 'Building Cr');
-
 -- --------------------------------------------------------
 
 --
@@ -217,14 +203,6 @@ CREATE TABLE `purchase_order_items` (
   `unit_cost` decimal(10,2) NOT NULL,
   `amount` decimal(10,2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `purchase_order_items`
---
-
-INSERT INTO `purchase_order_items` (`order_id`, `po_id`, `stock_property_no`, `unit`, `description`, `quantity`, `unit_cost`, `amount`) VALUES
-(20, 12, '12001', '65', '34', 45, 4234.00, 190530.00),
-(21, 13, '13001', '14', 'Plywood', 10, 100.00, 1000.00);
 
 -- --------------------------------------------------------
 
@@ -245,13 +223,6 @@ CREATE TABLE `purchase_requests` (
   `status` enum('Approve','Rejected') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `purchase_requests`
---
-
-INSERT INTO `purchase_requests` (`request_id`, `user_id`, `entity_name`, `fund_cluster`, `office_section`, `pr_no`, `date_requested`, `responsibility_center_code`, `purpose`, `status`) VALUES
-(31, 3, '232', '32', '32', '43', '2025-04-07', 56, '56', '');
-
 -- --------------------------------------------------------
 
 --
@@ -267,13 +238,6 @@ CREATE TABLE `purchase_request_items` (
   `unit_cost` decimal(10,2) NOT NULL,
   `total_cost` decimal(10,2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `purchase_request_items`
---
-
-INSERT INTO `purchase_request_items` (`id`, `purchase_request_id`, `item_description`, `unit`, `quantity`, `unit_cost`, `total_cost`) VALUES
-(14, 31, '321', '3213', 3213, 321.00, 1031373.00);
 
 -- --------------------------------------------------------
 
@@ -358,7 +322,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `username`, `password`, `user_level`, `image`, `status`, `last_login`) VALUES
-(1, 'Jm', 'Admin', 'd033e22ae348aeb5660fc2140aec35850c4da997', 1, 'icbdya3s1.png', 1, '2025-04-14 16:39:28'),
+(1, 'Jm', 'Admin', 'd033e22ae348aeb5660fc2140aec35850c4da997', 1, 'icbdya3s1.png', 1, '2025-05-03 09:22:29'),
 (2, 'John Walker', 'special', 'ba36b97a41e7faf742ab09bf88405ac04f99599a', 2, 'no_image.png', 1, '2025-03-04 18:42:47'),
 (3, 'Christopher', 'User', '12dea96fec20593566ab75692c9949596833adc9', 3, 'no_image.png', 1, '2025-03-04 18:42:20'),
 (5, 'Kevin', 'kevin', '5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8', 3, 'no_image.png', 1, '2021-04-04 19:54:29');
@@ -420,6 +384,13 @@ ALTER TABLE `invoice_items`
   ADD PRIMARY KEY (`invoice_item_id`),
   ADD KEY `invoice_id` (`invoice_id`),
   ADD KEY `po_id` (`po_id`);
+
+--
+-- Indexes for table `ledger`
+--
+ALTER TABLE `ledger`
+  ADD PRIMARY KEY (`ledger_id`),
+  ADD KEY `ap_id` (`ap_id`);
 
 --
 -- Indexes for table `media`
@@ -501,7 +472,7 @@ ALTER TABLE `user_groups`
 -- AUTO_INCREMENT for table `accounts_payable`
 --
 ALTER TABLE `accounts_payable`
-  MODIFY `ap_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `ap_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `categories`
@@ -520,6 +491,12 @@ ALTER TABLE `invoices`
 --
 ALTER TABLE `invoice_items`
   MODIFY `invoice_item_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `ledger`
+--
+ALTER TABLE `ledger`
+  MODIFY `ledger_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `media`
@@ -549,13 +526,13 @@ ALTER TABLE `purchase_order_items`
 -- AUTO_INCREMENT for table `purchase_requests`
 --
 ALTER TABLE `purchase_requests`
-  MODIFY `request_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `request_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 
 --
 -- AUTO_INCREMENT for table `purchase_request_items`
 --
 ALTER TABLE `purchase_request_items`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `stock_report`
@@ -606,6 +583,12 @@ ALTER TABLE `invoices`
 ALTER TABLE `invoice_items`
   ADD CONSTRAINT `invoice_items_ibfk_1` FOREIGN KEY (`invoice_id`) REFERENCES `invoices` (`invoice_id`) ON DELETE CASCADE,
   ADD CONSTRAINT `invoice_items_ibfk_2` FOREIGN KEY (`po_id`) REFERENCES `purchase_orders` (`po_id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `ledger`
+--
+ALTER TABLE `ledger`
+  ADD CONSTRAINT `ledger_ibfk_1` FOREIGN KEY (`ap_id`) REFERENCES `accounts_payable` (`ap_id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `products`
