@@ -61,7 +61,7 @@
     </a>
     <ul class="nav submenu">
        <li><a href="product.php">Manage Stocks</a> </li>
-       <li><a href="add_product.php">Add Stocks</a> </li>
+       <li><a href="add_stocks.php">Add Stocks</a> </li>
    </ul>
   </li>
   <li>

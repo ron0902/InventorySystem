@@ -147,8 +147,8 @@ if (isset($_GET['check_status'])) {
     </div>
 </div>
 
-<!-- Add Accounts Payable Form -->
 <div class="row">
+    <!-- Add Accounts Payable Form -->
     <div class="col-md-6">
         <div class="panel panel-default">
             <div class="panel-heading">
@@ -203,11 +203,9 @@ if (isset($_GET['check_status'])) {
             </div>
         </div>
     </div>
-</div>
 
-<!-- Make a Payment Form -->
-<div class="row">
-    <div class="col-md-6">
+    <!-- Make a Payment Form -->
+    <div class="col-md-6"> <!-- Removed col-md-offset-6 to align side by side -->
         <div class="panel panel-default">
             <div class="panel-heading">
                 <strong>
