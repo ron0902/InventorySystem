@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 03, 2025 at 05:41 PM
+-- Generation Time: May 05, 2025 at 09:46 AM
 -- Server version: 10.4.32-MariaDB
--- PHP Version: 8.0.30
+-- PHP Version: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -170,22 +170,6 @@ INSERT INTO `offices` (`id`, `name`, `contact_number`, `email`, `created_at`) VA
 -- --------------------------------------------------------
 
 --
--- Table structure for table `products`
---
-
-CREATE TABLE `products` (
-  `product_id` int(11) NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `unit_cost` int(100) NOT NULL,
-  `amount` int(100) NOT NULL,
-  `quantity` varchar(50) DEFAULT NULL,
-  `categorie_id` int(11) UNSIGNED NOT NULL,
-  `date` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `purchase_orders`
 --
 
@@ -218,7 +202,8 @@ CREATE TABLE `purchase_orders` (
 
 INSERT INTO `purchase_orders` (`po_id`, `supplier_name`, `address`, `tin`, `po_number`, `date`, `mode_of_procurement`, `place_of_delivery`, `delivery_term`, `payment_term`, `total_amount`, `total_amount_words`, `confirm_supplier`, `confirm_date`, `head_of_procurement`, `fund_cluster`, `funds_available`, `ors_burs_no`, `date_of_ors_burs`, `purpose`) VALUES
 (14, 'ron', 'Baranggay sinawal', '30', 'PO-01', '2025-05-03', 'None', 'New Society national high school', 'within 30 days', 'Auto Debit Account', 1250.00, 'One Thousand, Two Hundred and Fifty', 'Ron', '2025-05-04', 'Principal', '23', 23.00, '23', '2025-05-03', 'Black Board'),
-(15, 'ron', 'Baranggay sinawal', '0902', 'PO-02', '2025-05-03', '43', 'New Society national high school', 'within 30 days', 'Auto Debit Account', 25000.00, 'Twenty-Five Thousand', 'Ron', '2025-05-04', 'Principal', '3213', 232321.00, '32131', '2025-05-04', 'Chair');
+(15, 'ron', 'Baranggay sinawal', '0902', 'PO-02', '2025-05-03', '43', 'New Society national high school', 'within 30 days', 'Auto Debit Account', 25000.00, 'Twenty-Five Thousand', 'Ron', '2025-05-04', 'Principal', '3213', 232321.00, '32131', '2025-05-04', 'Chair'),
+(16, 'ron', '23', '34', '56', '2025-05-12', '321', '435', '34', '12', 19092.00, 'Nineteen Thousand and Ninety-Two', '21', '2025-05-19', '43', '45', 12.00, '324', '2025-05-05', '324');
 
 -- --------------------------------------------------------
 
@@ -244,7 +229,9 @@ CREATE TABLE `purchase_order_items` (
 INSERT INTO `purchase_order_items` (`order_id`, `po_id`, `stock_property_no`, `unit`, `description`, `quantity`, `unit_cost`, `amount`) VALUES
 (22, 14, '14001', '1', 'Ply wood', 1, 500.00, 500.00),
 (23, 14, '14002', '5', 'Paint', 5, 150.00, 750.00),
-(24, 15, '15001', '500', 'Chair', 500, 50.00, 25000.00);
+(24, 15, '15001', '500', 'Chair', 500, 50.00, 25000.00),
+(25, 16, '16001', '43', '3', 123, 43.00, 5289.00),
+(26, 16, '16002', '321', '213', 321, 43.00, 13803.00);
 
 -- --------------------------------------------------------
 
@@ -296,6 +283,42 @@ INSERT INTO `purchase_request_items` (`id`, `purchase_request_id`, `item_descrip
 (20, 34, 'Ply wood', '1', 1, 500.00, 500.00),
 (21, 34, 'Paint', '5', 5, 150.00, 750.00),
 (22, 35, 'Chair', '500', 500, 50.00, 25000.00);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `stocks`
+--
+
+CREATE TABLE `stocks` (
+  `stocks_id` int(10) UNSIGNED NOT NULL,
+  `stock_property_no` varchar(255) NOT NULL,
+  `quantity` int(11) NOT NULL,
+  `unit_cost` decimal(10,2) NOT NULL,
+  `description` text NOT NULL,
+  `amount` decimal(10,2) NOT NULL,
+  `categorie_id` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `stocks`
+--
+
+INSERT INTO `stocks` (`stocks_id`, `stock_property_no`, `quantity`, `unit_cost`, `description`, `amount`, `categorie_id`) VALUES
+(5, '14001', 1, 500.00, 'Ply wood', 500.00, NULL),
+(6, '14002', 5, 150.00, 'Paint', 750.00, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `stock_po_mapping`
+--
+
+CREATE TABLE `stock_po_mapping` (
+  `id` int(11) NOT NULL,
+  `stock_id` int(11) NOT NULL,
+  `po_item_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -380,7 +403,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `username`, `password`, `user_level`, `image`, `status`, `last_login`) VALUES
-(1, 'Jm', 'Admin', 'd033e22ae348aeb5660fc2140aec35850c4da997', 1, 'icbdya3s1.png', 1, '2025-05-03 09:22:29'),
+(1, 'Jm', 'Admin', 'd033e22ae348aeb5660fc2140aec35850c4da997', 1, 'icbdya3s1.png', 1, '2025-05-05 06:46:41'),
 (2, 'John Walker', 'special', 'ba36b97a41e7faf742ab09bf88405ac04f99599a', 2, 'no_image.png', 1, '2025-03-04 18:42:47'),
 (3, 'Christopher', 'User', '12dea96fec20593566ab75692c9949596833adc9', 3, 'no_image.png', 1, '2025-03-04 18:42:20'),
 (5, 'Kevin', 'kevin', '5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8', 3, 'no_image.png', 1, '2021-04-04 19:54:29');
@@ -426,6 +449,7 @@ ALTER TABLE `accounts_payable`
 ALTER TABLE `categories`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `name` (`name`);
+ALTER TABLE `categories` ADD FULLTEXT KEY `name_2` (`name`);
 
 --
 -- Indexes for table `invoices`
@@ -458,14 +482,6 @@ ALTER TABLE `media`
   ADD KEY `id` (`id`);
 
 --
--- Indexes for table `products`
---
-ALTER TABLE `products`
-  ADD PRIMARY KEY (`product_id`),
-  ADD UNIQUE KEY `name` (`name`),
-  ADD KEY `categorie_id` (`categorie_id`);
-
---
 -- Indexes for table `purchase_orders`
 --
 ALTER TABLE `purchase_orders`
@@ -491,6 +507,22 @@ ALTER TABLE `purchase_requests`
 ALTER TABLE `purchase_request_items`
   ADD PRIMARY KEY (`id`),
   ADD KEY `purchase_request_id` (`purchase_request_id`);
+
+--
+-- Indexes for table `stocks`
+--
+ALTER TABLE `stocks`
+  ADD PRIMARY KEY (`stocks_id`),
+  ADD UNIQUE KEY `stock_property_no` (`stock_property_no`),
+  ADD KEY `categorie_id` (`categorie_id`);
+
+--
+-- Indexes for table `stock_po_mapping`
+--
+ALTER TABLE `stock_po_mapping`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `stock_id` (`stock_id`),
+  ADD KEY `po_item_id` (`po_item_id`);
 
 --
 -- Indexes for table `stock_report`
@@ -562,22 +594,16 @@ ALTER TABLE `media`
   MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `products`
---
-ALTER TABLE `products`
-  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
-
---
 -- AUTO_INCREMENT for table `purchase_orders`
 --
 ALTER TABLE `purchase_orders`
-  MODIFY `po_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `po_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `purchase_order_items`
 --
 ALTER TABLE `purchase_order_items`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT for table `purchase_requests`
@@ -590,6 +616,18 @@ ALTER TABLE `purchase_requests`
 --
 ALTER TABLE `purchase_request_items`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+
+--
+-- AUTO_INCREMENT for table `stocks`
+--
+ALTER TABLE `stocks`
+  MODIFY `stocks_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT for table `stock_po_mapping`
+--
+ALTER TABLE `stock_po_mapping`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `stock_report`
@@ -648,12 +686,6 @@ ALTER TABLE `ledger`
   ADD CONSTRAINT `ledger_ibfk_1` FOREIGN KEY (`ap_id`) REFERENCES `accounts_payable` (`ap_id`) ON DELETE CASCADE;
 
 --
--- Constraints for table `products`
---
-ALTER TABLE `products`
-  ADD CONSTRAINT `FK_products` FOREIGN KEY (`categorie_id`) REFERENCES `categories` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
 -- Constraints for table `purchase_order_items`
 --
 ALTER TABLE `purchase_order_items`
@@ -664,6 +696,12 @@ ALTER TABLE `purchase_order_items`
 --
 ALTER TABLE `purchase_request_items`
   ADD CONSTRAINT `purchase_request_items_ibfk_1` FOREIGN KEY (`purchase_request_id`) REFERENCES `purchase_requests` (`request_id`);
+
+--
+-- Constraints for table `stock_po_mapping`
+--
+ALTER TABLE `stock_po_mapping`
+  ADD CONSTRAINT `stock_po_mapping_ibfk_2` FOREIGN KEY (`po_item_id`) REFERENCES `purchase_order_items` (`order_id`);
 
 --
 -- Constraints for table `stock_report`
