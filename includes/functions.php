@@ -138,6 +138,21 @@ if ($ap['status'] === 'Pending' && $due_date < $current_date) {
       return $ap['status']; // Return the current status if no change is needed
   }
 }
-
-
+function find_po_items_by_po_id($po_id) {
+  global $db;
+  $sql = "SELECT 
+              poi.stock_property_no, 
+              poi.quantity, 
+              poi.unit_cost, 
+              poi.description, 
+              poi.amount 
+          FROM purchase_order_items poi
+          WHERE poi.po_id = '{$po_id}' AND poi.quantity > 0";
+  return $db->query($sql);
+}
+function find_all_pos() {
+  global $db;
+  $sql = "SELECT po_id, po_number, supplier_name FROM purchase_orders";
+  return $db->query($sql);
+}
 ?>

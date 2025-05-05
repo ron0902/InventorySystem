@@ -41,12 +41,12 @@
                 <td class="text-center"> <?php echo read_date($product['date']); ?></td>
                 <td class="text-center">
                   <div class="btn-group">
-                    <a href="edit_product.php?product_id=<?php echo (int)$product['stocks_id'];?>" class="btn btn-info btn-xs"  title="Edit" data-toggle="tooltip">
+                    <a href="edit_stocks.php?stocks_id=<?php echo (int)$product['stocks_id'];?>" class="btn btn-info btn-xs"  title="Edit" data-toggle="tooltip">
                       <span class="glyphicon glyphicon-edit"></span>
                     </a>
-                    <a href="delete_product.php?product_id=<?php echo (int)$product['stocks_id'];?>" class="btn btn-danger btn-xs"  title="Delete" data-toggle="tooltip">
+                    <a href="delete_stocks.php?stocks_id=<?php echo (int)$product['stocks_id'];?>" class="btn btn-danger btn-xs"  title="Delete" data-toggle="tooltip">
                       <span class="glyphicon glyphicon-trash"></span>
-                    </a>
+                    </a>  
                   </div>
                 </td>
               </tr>

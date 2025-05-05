@@ -24,9 +24,10 @@ function find_by_sql($sql)
 /*--------------------------------------------------------------*/
 /*  Function for Find data from table by id
 /*--------------------------------------------------------------*/
-function find_by_id($table, $id, $column = 'id') {
+function find_by_id($table, $id, $column = null) {
   global $db;
   $id = (int)$id;
+  $column = $column ?: (($table === 'stocks') ? 'stocks_id' : 'id');
   $sql = "SELECT * FROM {$db->escape($table)} WHERE {$db->escape($column)} = '{$db->escape($id)}' LIMIT 1";
   $result = $db->query($sql);
   return ($result && $db->num_rows($result) > 0) ? $db->fetch_assoc($result) : null;
@@ -37,7 +38,7 @@ function find_by_id($table, $id, $column = 'id') {
 function delete_by_id($table, $id) {
   global $db;
   if (tableExists($table)) {
-    $primary_key_column = ($table === 'products') ? 'product_id' : (($table === 'suppliers') ? 'supplier_id' : 'id');
+    $primary_key_column = ($table === 'stocks') ? 'stocks_id' : (($table === 'suppliers') ? 'supplier_id' : 'id');
     $sql = "DELETE FROM " . $db->escape($table);
     $sql .= " WHERE {$primary_key_column}=" . $db->escape($id);
     $sql .= " LIMIT 1";
@@ -51,8 +52,8 @@ function delete_by_id($table, $id) {
 function count_by_id($table) {
   global $db;
   if (tableExists($table)) {
-    // Replace 'id' with the correct primary key column name, e.g., 'product_id'
-    $primary_key_column = ($table === 'products') ? 'product_id' : 'id';
+    // Replace 'id' with the correct primary key column name
+    $primary_key_column = ($table === 'stocks') ? 'stocks_id' : 'id';
     $sql = "SELECT COUNT({$primary_key_column}) AS total FROM " . $db->escape($table);
     $result = $db->query($sql);
     return ($db->fetch_assoc($result));
@@ -204,10 +205,10 @@ function tableExists($table){
    /*--------------------------------------------------------------*/
    function join_product_table(){
     global $db;
-    $sql  = "SELECT p.product_id, p.name, p.quantity, p.unit_cost, p.date, c.name AS categorie";
-    $sql .= " FROM products p";
+    $sql  = "SELECT p.stocks_id, p.name, p.quantity, p.unit_cost, p.date, c.name AS categorie";
+    $sql .= " FROM stocks p";
     $sql .= " LEFT JOIN categories c ON c.id = p.categorie_id";
-    $sql .= " ORDER BY p.product_id ASC";
+    $sql .= " ORDER BY p.stocks_id ASC";
     return find_by_sql($sql);
 }
   /*--------------------------------------------------------------*/
@@ -218,7 +219,7 @@ function tableExists($table){
   function find_product_by_title($product_name){
     global $db;
     $p_name = remove_junk($db->escape($product_name));
-    $sql = "SELECT name FROM products WHERE name like '%$p_name%' LIMIT 5";
+    $sql = "SELECT name FROM stocks WHERE name like '%$p_name%' LIMIT 5";
     $result = find_by_sql($sql);
     return $result;
   }
@@ -229,7 +230,7 @@ function tableExists($table){
   /*--------------------------------------------------------------*/
   function find_all_product_info_by_title($title){
     global $db;
-    $sql  = "SELECT * FROM products ";
+    $sql  = "SELECT * FROM stocks ";
     $sql .= " WHERE name ='{$title}'";
     $sql .=" LIMIT 1";
     return find_by_sql($sql);
@@ -242,7 +243,7 @@ function tableExists($table){
     global $db;
     $qty = (int) $qty;
     $id  = (int)$p_id;
-    $sql = "UPDATE products SET quantity=quantity -'{$qty}' WHERE id = '{$id}'";
+    $sql = "UPDATE stocks SET quantity=quantity -'{$qty}' WHERE id = '{$id}'";
     $result = $db->query($sql);
     return($db->affected_rows() === 1 ? true : false);
 
@@ -252,10 +253,10 @@ function tableExists($table){
   /*--------------------------------------------------------------*/
   function find_recent_product_added($limit){
     global $db;
-    $sql   = " SELECT p.product_id,p.name,c.name AS categorie";
-    $sql  .= " FROM products p";
+    $sql   = " SELECT p.stocks_id,p.name,c.name AS categorie";
+    $sql  .= " FROM stocks p";
     $sql  .= " LEFT JOIN categories c ON c.id = p.categorie_id";
-    $sql  .= " ORDER BY p.product_id DESC LIMIT ".$db->escape((int)$limit);
+    $sql  .= " ORDER BY p.stocks_id DESC LIMIT ".$db->escape((int)$limit);
     return find_by_sql($sql);
  }
  /*--------------------------------------------------------------*/
@@ -263,9 +264,9 @@ function tableExists($table){
   /*--------------------------------------------------------------*/
   function find_recent_purchase_requests($limit){
     global $db;
-    $sql  = " SELECT pr.request_id, pr.product_id, pr.quantity, pr.requested_by, pr.request_date, p.name AS product_name";
+    $sql  = " SELECT pr.request_id, pr.stocks_id, pr.quantity, pr.requested_by, pr.request_date, p.name AS product_name";
     $sql .= " FROM purchase_requests pr";
-    $sql .= " LEFT JOIN products p ON p.product_id = pr.product_id";
+    $sql .= " LEFT JOIN stocks p ON p.stocks_id = pr.stocks_id";
     $sql .= " ORDER BY pr.request_id DESC LIMIT ".$db->escape((int)$limit);
     return find_by_sql($sql);
   }

@@ -6,7 +6,7 @@
 ?>
 <?php
  $c_categorie     = count_by_id('categories');
- $c_product       = count_by_id('products');
+ $c_product       = count_by_id('stocks');
  $c_user          = count_by_id('users');
  $recent_products = find_recent_product_added('5');
 ?>
