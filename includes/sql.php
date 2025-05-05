@@ -253,12 +253,12 @@ function tableExists($table){
   /*--------------------------------------------------------------*/
   function find_recent_product_added($limit){
     global $db;
-    $sql   = " SELECT p.stocks_id,p.name,c.name AS categorie";
+    $sql   = " SELECT p.stocks_id, p.description, c.name AS categorie";
     $sql  .= " FROM stocks p";
     $sql  .= " LEFT JOIN categories c ON c.id = p.categorie_id";
     $sql  .= " ORDER BY p.stocks_id DESC LIMIT ".$db->escape((int)$limit);
     return find_by_sql($sql);
- }
+}
  /*--------------------------------------------------------------*/
   /* Function for Display Recent purchase requests
   /*--------------------------------------------------------------*/
