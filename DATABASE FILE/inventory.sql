@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 05, 2025 at 09:46 AM
+-- Generation Time: May 06, 2025 at 02:06 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -46,6 +46,28 @@ CREATE TABLE `accounts_payable` (
 INSERT INTO `accounts_payable` (`ap_id`, `supplier_id`, `invoice_id`, `amount`, `due_date`, `status`, `created_at`, `po_id`, `balance`) VALUES
 (13, 3, 7, 1250.00, '2025-05-30', 'Paid', '2025-05-03 15:01:32', 14, 0.00),
 (14, 3, 8, 25000.00, '2025-05-09', 'Paid', '2025-05-03 15:25:35', 15, 0.00);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `borrowers`
+--
+
+CREATE TABLE `borrowers` (
+  `borrower_id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `address` text DEFAULT NULL,
+  `contact_number` varchar(15) DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Dumping data for table `borrowers`
+--
+
+INSERT INTO `borrowers` (`borrower_id`, `name`, `address`, `contact_number`, `email`, `created_at`) VALUES
+(1, 'Ron', 'prk 2 4', '02325434', 'ron@gmail.com', '2025-05-06 06:37:01');
 
 -- --------------------------------------------------------
 
@@ -136,18 +158,6 @@ INSERT INTO `ledger` (`ledger_id`, `ap_id`, `transaction_type`, `amount`, `balan
 -- --------------------------------------------------------
 
 --
--- Table structure for table `media`
---
-
-CREATE TABLE `media` (
-  `id` int(11) UNSIGNED NOT NULL,
-  `file_name` varchar(255) NOT NULL,
-  `file_type` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `offices`
 --
 
@@ -166,6 +176,28 @@ CREATE TABLE `offices` (
 INSERT INTO `offices` (`id`, `name`, `contact_number`, `email`, `created_at`) VALUES
 (0, '213', '23', '434@gmail.com', '2025-04-07 04:16:07'),
 (0, '213', '23', '434@gmail.com', '2025-04-07 04:16:07');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `principals`
+--
+
+CREATE TABLE `principals` (
+  `principal_id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `address` text DEFAULT NULL,
+  `contact_number` varchar(15) DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Dumping data for table `principals`
+--
+
+INSERT INTO `principals` (`principal_id`, `name`, `address`, `contact_number`, `email`, `created_at`) VALUES
+(1, '32', '434', '5454', '657@gmail.com', '2025-05-06 06:44:59');
 
 -- --------------------------------------------------------
 
@@ -305,20 +337,7 @@ CREATE TABLE `stocks` (
 --
 
 INSERT INTO `stocks` (`stocks_id`, `stock_property_no`, `quantity`, `unit_cost`, `description`, `amount`, `categorie_id`) VALUES
-(5, '14001', 1, 500.00, 'Ply wood', 500.00, NULL),
-(6, '14002', 5, 150.00, 'Paint', 750.00, NULL);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `stock_po_mapping`
---
-
-CREATE TABLE `stock_po_mapping` (
-  `id` int(11) NOT NULL,
-  `stock_id` int(11) NOT NULL,
-  `po_item_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+(6, '14002', 5, 150.00, 'Paint', 750.00, 15);
 
 -- --------------------------------------------------------
 
@@ -403,7 +422,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `username`, `password`, `user_level`, `image`, `status`, `last_login`) VALUES
-(1, 'Jm', 'Admin', 'd033e22ae348aeb5660fc2140aec35850c4da997', 1, 'icbdya3s1.png', 1, '2025-05-05 06:46:41'),
+(1, 'Jm', 'Admin', 'd033e22ae348aeb5660fc2140aec35850c4da997', 1, 'icbdya3s1.png', 1, '2025-05-06 05:39:30'),
 (2, 'John Walker', 'special', 'ba36b97a41e7faf742ab09bf88405ac04f99599a', 2, 'no_image.png', 1, '2025-03-04 18:42:47'),
 (3, 'Christopher', 'User', '12dea96fec20593566ab75692c9949596833adc9', 3, 'no_image.png', 1, '2025-03-04 18:42:20'),
 (5, 'Kevin', 'kevin', '5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8', 3, 'no_image.png', 1, '2021-04-04 19:54:29');
@@ -444,6 +463,12 @@ ALTER TABLE `accounts_payable`
   ADD KEY `invoice_id` (`invoice_id`);
 
 --
+-- Indexes for table `borrowers`
+--
+ALTER TABLE `borrowers`
+  ADD PRIMARY KEY (`borrower_id`);
+
+--
 -- Indexes for table `categories`
 --
 ALTER TABLE `categories`
@@ -475,11 +500,10 @@ ALTER TABLE `ledger`
   ADD KEY `ap_id` (`ap_id`);
 
 --
--- Indexes for table `media`
+-- Indexes for table `principals`
 --
-ALTER TABLE `media`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `id` (`id`);
+ALTER TABLE `principals`
+  ADD PRIMARY KEY (`principal_id`);
 
 --
 -- Indexes for table `purchase_orders`
@@ -515,14 +539,6 @@ ALTER TABLE `stocks`
   ADD PRIMARY KEY (`stocks_id`),
   ADD UNIQUE KEY `stock_property_no` (`stock_property_no`),
   ADD KEY `categorie_id` (`categorie_id`);
-
---
--- Indexes for table `stock_po_mapping`
---
-ALTER TABLE `stock_po_mapping`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `stock_id` (`stock_id`),
-  ADD KEY `po_item_id` (`po_item_id`);
 
 --
 -- Indexes for table `stock_report`
@@ -564,6 +580,12 @@ ALTER TABLE `accounts_payable`
   MODIFY `ap_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
+-- AUTO_INCREMENT for table `borrowers`
+--
+ALTER TABLE `borrowers`
+  MODIFY `borrower_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT for table `categories`
 --
 ALTER TABLE `categories`
@@ -588,10 +610,10 @@ ALTER TABLE `ledger`
   MODIFY `ledger_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT for table `media`
+-- AUTO_INCREMENT for table `principals`
 --
-ALTER TABLE `media`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+ALTER TABLE `principals`
+  MODIFY `principal_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `purchase_orders`
@@ -622,12 +644,6 @@ ALTER TABLE `purchase_request_items`
 --
 ALTER TABLE `stocks`
   MODIFY `stocks_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
-
---
--- AUTO_INCREMENT for table `stock_po_mapping`
---
-ALTER TABLE `stock_po_mapping`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `stock_report`
@@ -696,12 +712,6 @@ ALTER TABLE `purchase_order_items`
 --
 ALTER TABLE `purchase_request_items`
   ADD CONSTRAINT `purchase_request_items_ibfk_1` FOREIGN KEY (`purchase_request_id`) REFERENCES `purchase_requests` (`request_id`);
-
---
--- Constraints for table `stock_po_mapping`
---
-ALTER TABLE `stock_po_mapping`
-  ADD CONSTRAINT `stock_po_mapping_ibfk_2` FOREIGN KEY (`po_item_id`) REFERENCES `purchase_order_items` (`order_id`);
 
 --
 -- Constraints for table `stock_report`

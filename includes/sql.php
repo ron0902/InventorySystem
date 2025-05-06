@@ -27,7 +27,30 @@ function find_by_sql($sql)
 function find_by_id($table, $id, $column = null) {
   global $db;
   $id = (int)$id;
-  $column = $column ?: (($table === 'stocks') ? 'stocks_id' : 'id');
+
+  // Dynamically determine the primary key column based on the table name
+  if (!$column) {
+    switch ($table) {
+      case 'borrowers':
+        $column = 'borrower_id';
+        break;
+      case 'suppliers':
+        $column = 'supplier_id';
+        break;
+      case 'stocks':
+        $column = 'stocks_id';
+        break;
+      case 'principals': // Add support for principals table
+        $column = 'principal_id';
+        break;
+      case 'users':
+        $column = 'id';
+        break;
+      default:
+        $column = 'id'; // Default primary key column
+    }
+  }
+
   $sql = "SELECT * FROM {$db->escape($table)} WHERE {$db->escape($column)} = '{$db->escape($id)}' LIMIT 1";
   $result = $db->query($sql);
   return ($result && $db->num_rows($result) > 0) ? $db->fetch_assoc($result) : null;
