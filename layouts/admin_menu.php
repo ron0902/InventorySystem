@@ -57,7 +57,7 @@
   <li>
     <a href="#" class="submenu-toggle">
       <i class="glyphicon glyphicon-th-large"></i>
-      <span>Stocks</span>
+      <span>Inventory Management</span>
     </a>
     <ul class="nav submenu">
        <li><a href="stocks.php">Manage Stocks</a> </li>
