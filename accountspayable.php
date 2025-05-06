@@ -29,7 +29,7 @@ if (isset($_POST['add_ap'])) {
                   VALUES ('{$supplier_id}', '{$po_id}', '{$invoice_id}', '{$amount}', '{$amount}', '{$due_date}', 'Pending')";
         
         if ($db->query($query)) {
-            $new_ap_id = $db->insert_id;
+            $new_ap_id = $db->insert_id();
 
             if ($new_ap_id) {
                 // Log the initial entry in the ledger
