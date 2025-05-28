@@ -123,15 +123,19 @@ if (isset($_GET['id'])) {
                         <td><?php echo remove_junk($pr_data['purpose']); ?></td>
                     </tr>
                     <tr>
-                        <td></td>
+                    <td></td>
                     <td colspan="2">Requested by:</td>
                     <td colspan="2">Approved by:</td>
-                    </tr>
+                </tr>
                 <tr>
                     <td>Signature:</td>
+                    <td colspan="2" rowspan="3" style="text-align:center;"><?php echo remove_junk($pr_data['requestor']); ?></td>
+                    <td colspan="2" rowspan="3" style="text-align:center;"><?php echo remove_junk($pr_data['approved_by']); ?></td>
                 </tr>
                 <tr>
                     <td>Printed Name:</td>
+                    
+                </tr>
                 </tr>
                 <tr>
                     <td>Designation:</td>

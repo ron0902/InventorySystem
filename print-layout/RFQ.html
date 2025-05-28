@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Request for Quotation</title>
+    <style>
+        @page {
+            size: A4;
+            margin: 20mm 15mm 20mm 15mm;
+        }
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #fff;
+        }
+        .rfq-outer {
+            width: 100vw;
+            min-height: 100vh;
+            display: flex;
+            align-items: flex-start; /* Align to top */
+            justify-content: center;
+        }
+        .rfq-container {
+            width: 210mm;
+            min-height: 200mm;
+            margin: 40px auto 0 auto; /* Add top margin */
+            border: 1px solid #000;
+            padding: 20px 15px;
+            box-sizing: border-box;
+            background: #fff;
+        }
+        .rfq-header {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        .rfq-header img {
+            height: 70px;
+            vertical-align: middle;
+        }
+        .rfq-title {
+            font-size: 16px;
+            font-weight: bold;
+            margin: 5px 0;
+        }
+        .rfq-subtitle {
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+        .rfq-meta, .rfq-meta td {
+            font-size: 13px;
+            border: none;
+            padding: 2px 4px;
+        }
+        .rfq-company {
+            margin: 15px 0 5px 0;
+            font-size: 13px;
+        }
+        .rfq-notes {
+            font-size: 12px;
+            margin-bottom: 10px;
+        }
+        .rfq-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 10px;
+        }
+        .rfq-table th, .rfq-table td {
+            border: 1px solid #000;
+            font-size: 12px;
+            padding: 4px 2px;
+            text-align: center;
+        }
+        .rfq-table th {
+            background: #f0f0f0;
+        }
+        .rfq-signature {
+            margin-top: 20px;
+            font-size: 12px;
+        }
+        .rfq-signature td {
+            border: none;
+            padding: 8px 4px;
+        }
+        .rfq-footer {
+            margin-top: 20px;
+            font-size: 12px;
+        }
+        .rfq-footer td {
+            border: none;
+            padding: 2px 4px;
+        }
+        @media print {
+            body, .rfq-outer, .rfq-container {
+                box-shadow: none;
+                border: none;
+                background: #fff;
+            }
+            .rfq-outer {
+                display: block;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="rfq-outer">
+<div class="rfq-container">
+   <div class="rfq-header">
+    <table style="width:100%; border:none;">
+        <tr>
+            <td style="width:15%; text-align:left; border:none;">
+                <img src="../images/Picture2.png" alt="DepEd Logo" style="height:70px;">
+            </td>
+            <td style="width:70%; text-align:center; border:none;">
+                <div>Region XII</div>
+                <div>NEW SOCSARGEN NATIONAL HIGH SCHOOL</div>
+                <div>General Santos City</div>
+                <div class="rfq-title">DEPARTMENT OF EDUCATION</div>
+                <div class="rfq-title">REQUEST FOR QUOTATION</div>
+            </td>
+            <td style="width:15%; text-align:right; border:none;">
+                <img src="../images/Picture1.png" alt="School Logo" style="height:70px;">
+            </td>
+        </tr>
+    </table>
+</div>
+    <table class="rfq-meta" style="width:100%; margin-bottom:10px;">
+        <tr>
+            <td style="width:60%;">Date: ____________________</td>
+            <td style="width:40%;">Quotation No.: ____________________</td>
+        </tr>
+    </table>
+    <div class="rfq-company">
+        <div>(Company Name) ____________________________________________</div>
+        <div>(Address) _________________________________________________</div>
+    </div>
+    <div class="rfq-notes">
+        Please quote your lowest price on the item/s listed below, subject to the General Conditions on the last page, stating the shortest time of delivery and submit your quotation duly signed by your representative not later than _____________________.<br>
+        <b>NOTE:</b>
+        <ol style="margin:0 0 0 20px; padding:0;">
+            <li>ALL ENTRIES MUST BE TYPEWRITTEN.</li>
+            <li>DELIVERY PERIOD WITHIN __________ CALENDAR DAYS.</li>
+            <li>WARRANTY SHALL BE FOR A PERIOD OF SIX (6) MONTHS FOR SUPPLIES & MATERIALS, ONE (1) YEAR FOR EQUIPMENT, FROM DATE OF ACCEPTANCE BY THE PROCURING ENTITY.</li>
+            <li>PRICE VALIDITY SHALL BE FOR A PERIOD OF __________ CALENDAR DAYS.</li>
+            <li>PHILGEPS REGISTRATION CERTIFICATE SHALL BE ATTACHED UPON SUBMISSION OF THE QUOTATION.</li>
+            <li>BIDDERS SHALL SUBMIT ORIGINAL BROCHURES SHOWING CERTIFICATIONS OF THE PRODUCT BEING OFFERED.</li>
+        </ol>
+    </div>
+    <table class="rfq-table">
+        <thead>
+        <tr>
+            <th>No.</th>
+            <th>Item Description</th>
+            <th>Unit</th>
+            <th>Quantity</th>
+            <th>Approved Budget for the Contract</th>
+            <th>Brand</th>
+            <th>Bid Amount</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        </tbody>
+    </table>
+    <div class="rfq-footer">
+        <div>Brand and Model: ___________________________</div>
+        <div>Delivery Period: ____________________________</div>
+        <div>Warranty: _________________________________</div>
+        <div>Price Validity: _____________________________</div>
+    </div>
+    <table class="rfq-signature" style="width:100%; margin-top:20px;">
+        <tr>
+            <td style="width:50%;">Printed Name/Signature: ___________________________</td>
+            <td style="width:50%;">Tel. No./Cellphone No./E-mail Address: ___________________________</td>
+        </tr>
+        <tr>
+            <td>Designation: ___________________________</td>
+            <td>Date: ___________________________</td>
+        </tr>
+    </table>
+    <div class="rfq-footer">
+        <div>PR No.: ___________________________</div>
+        <div>Date Published: ___________________________</div>
+        <div>Closing Date: ___________________________</div>
+        <div>PhilGEPS Ref. No.: ___________________________</div>
+    </div>
+</div>
+</div>
+</body>
+</html>

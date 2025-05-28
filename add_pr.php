@@ -7,7 +7,7 @@ page_require_level(2);
 
 <?php
 if (isset($_POST['add_purchase_request'])) {
-    $req_fields = ['entity_name', 'fund_cluster', 'office_section', 'pr_no', 'responsibility_center_code', 'purpose'];
+    $req_fields = ['entity_name', 'fund_cluster', 'office_section', 'pr_no', 'responsibility_center_code', 'purpose', 'requestor', 'approved_by'];
     validate_fields($req_fields);
 
     $errors = [];
@@ -30,14 +30,16 @@ if (isset($_POST['add_purchase_request'])) {
         $pr_no = remove_junk($db->escape($_POST['pr_no']));
         $responsibility_center_code = remove_junk($db->escape($_POST['responsibility_center_code']));
         $purpose = remove_junk($db->escape($_POST['purpose']));
+        $requestor = remove_junk($db->escape($_POST['requestor']));
+        $approved_by = remove_junk($db->escape($_POST['approved_by']));
         $date_requested = make_date();
 
         // Start transaction
         $db->query("START TRANSACTION");
 
-        // Insert purchase request
-        $query = "INSERT INTO purchase_requests (entity_name, fund_cluster, office_section, pr_no, responsibility_center_code, purpose, date_requested, status) 
-                  VALUES ('{$entity_name}', '{$fund_cluster}', '{$office_section}', '{$pr_no}', '{$responsibility_center_code}', '{$purpose}', '{$date_requested}', 'Pending')";
+        // Insert purchase request (add approved_by)
+        $query = "INSERT INTO purchase_requests (entity_name, fund_cluster, office_section, pr_no, responsibility_center_code, purpose, requestor, approved_by, date_requested, status) 
+                  VALUES ('{$entity_name}', '{$fund_cluster}', '{$office_section}', '{$pr_no}', '{$responsibility_center_code}', '{$purpose}', '{$requestor}', '{$approved_by}', '{$date_requested}', 'Pending')";
         
         if ($db->query($query)) {
             $purchase_request_id = $db->insert_id();
@@ -115,6 +117,12 @@ if (isset($_POST['add_purchase_request'])) {
                     </div>
                     <div class="form-group">
                         <textarea class="form-control" name="purpose" placeholder="Purpose"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="requestor" placeholder="Requestor">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="approved_by" placeholder="Approved By">
                     </div>
                     <div id="items">
                         <div class="form-group item" style="border: 1px solid #ddd; padding: 10px;">
