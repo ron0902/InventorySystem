@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 06, 2025 at 02:06 PM
+-- Generation Time: May 28, 2025 at 07:59 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -280,6 +280,8 @@ CREATE TABLE `purchase_requests` (
   `date_requested` date NOT NULL,
   `responsibility_center_code` int(250) NOT NULL,
   `purpose` text NOT NULL,
+  `requestor` varchar(255) DEFAULT NULL,
+  `approved_by` varchar(255) DEFAULT NULL,
   `status` enum('Approve','Rejected') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -287,9 +289,8 @@ CREATE TABLE `purchase_requests` (
 -- Dumping data for table `purchase_requests`
 --
 
-INSERT INTO `purchase_requests` (`request_id`, `entity_name`, `fund_cluster`, `office_section`, `pr_no`, `date_requested`, `responsibility_center_code`, `purpose`, `status`) VALUES
-(34, 'New Society National High School', '23', '34', 'PR-01', '2025-05-03', 78, 'Black Board ', ''),
-(35, 'New Society National High School', '3213', '12312', 'PR-02', '2025-05-03', 123123, 'Chair', '');
+INSERT INTO `purchase_requests` (`request_id`, `entity_name`, `fund_cluster`, `office_section`, `pr_no`, `date_requested`, `responsibility_center_code`, `purpose`, `requestor`, `approved_by`, `status`) VALUES
+(37, '3213', '312', '312', '321', '2025-05-28', 312, '3123', '1312', '3123', '');
 
 -- --------------------------------------------------------
 
@@ -312,9 +313,7 @@ CREATE TABLE `purchase_request_items` (
 --
 
 INSERT INTO `purchase_request_items` (`id`, `purchase_request_id`, `item_description`, `unit`, `quantity`, `unit_cost`, `total_cost`) VALUES
-(20, 34, 'Ply wood', '1', 1, 500.00, 500.00),
-(21, 34, 'Paint', '5', 5, 150.00, 750.00),
-(22, 35, 'Chair', '500', 500, 50.00, 25000.00);
+(25, 37, '321', '321', 321, 321.00, 103041.00);
 
 -- --------------------------------------------------------
 
@@ -337,7 +336,9 @@ CREATE TABLE `stocks` (
 --
 
 INSERT INTO `stocks` (`stocks_id`, `stock_property_no`, `quantity`, `unit_cost`, `description`, `amount`, `categorie_id`) VALUES
-(6, '14002', 5, 150.00, 'Paint', 750.00, 15);
+(6, '14002', 5, 150.00, 'Paint', 750.00, 15),
+(7, '16001', 123, 43.00, '3', 5289.00, 16),
+(8, '16002', 321, 43.00, '213', 13803.00, 15);
 
 -- --------------------------------------------------------
 
@@ -422,7 +423,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `username`, `password`, `user_level`, `image`, `status`, `last_login`) VALUES
-(1, 'Jm', 'Admin', 'd033e22ae348aeb5660fc2140aec35850c4da997', 1, 'icbdya3s1.png', 1, '2025-05-06 05:39:30'),
+(1, 'Jm', 'Admin', 'd033e22ae348aeb5660fc2140aec35850c4da997', 1, 'icbdya3s1.png', 1, '2025-05-28 07:03:17'),
 (2, 'John Walker', 'special', 'ba36b97a41e7faf742ab09bf88405ac04f99599a', 2, 'no_image.png', 1, '2025-03-04 18:42:47'),
 (3, 'Christopher', 'User', '12dea96fec20593566ab75692c9949596833adc9', 3, 'no_image.png', 1, '2025-03-04 18:42:20'),
 (5, 'Kevin', 'kevin', '5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8', 3, 'no_image.png', 1, '2021-04-04 19:54:29');
@@ -631,19 +632,19 @@ ALTER TABLE `purchase_order_items`
 -- AUTO_INCREMENT for table `purchase_requests`
 --
 ALTER TABLE `purchase_requests`
-  MODIFY `request_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+  MODIFY `request_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 
 --
 -- AUTO_INCREMENT for table `purchase_request_items`
 --
 ALTER TABLE `purchase_request_items`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT for table `stocks`
 --
 ALTER TABLE `stocks`
-  MODIFY `stocks_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `stocks_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `stock_report`
