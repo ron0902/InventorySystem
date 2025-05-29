@@ -229,28 +229,92 @@
         </tr>
         </tbody>
     </table>
-    <div class="rfq-footer">
-        <div>Brand and Model: ___________________________</div>
-        <div>Delivery Period: ____________________________</div>
-        <div>Warranty: _________________________________</div>
-        <div>Price Validity: _____________________________</div>
-    </div>
-    <table class="rfq-signature" style="width:100%; margin-top:20px;">
+    </table>
+    <!-- INSERT THIS BLOCK BELOW -->
+    <table style="width:100%; margin-top:18px; margin-bottom:8px; border:none;">
         <tr>
-            <td style="width:50%;">Printed Name/Signature: ___________________________</td>
-            <td style="width:50%;">Tel. No./Cellphone No./E-mail Address: ___________________________</td>
+        <td style="width:30%; vertical-align:top; border:none;">
+            Brand and Model<br>
+            Delivery Period<br>
+            Warranty<br>
+            Price Validity
+        </td>
+        <td style="width:70%; border:none;">
+            <table style="width:100%; border-collapse:collapse;">
+                <tr><td style="border-bottom:1px solid #000;">&nbsp;</td></tr>
+                <tr><td style="border-bottom:1px solid #000;">&nbsp;</td></tr>
+                <tr><td style="border-bottom:1px solid #000;">&nbsp;</td></tr>
+                <tr><td style="border-bottom:1px solid #000;">&nbsp;</td></tr>
+            </table>
+        </td>
+    </tr>
+        <tr>
+            <td colspan="2" style="border:none; text-align:center; padding-bottom:2px;">
+                <b>New Society National High School</b><br>
+                <span style="font-style:italic; font-size:12px;">Name of the Procuring Entity</span>
+            </td>
         </tr>
         <tr>
-            <td>Designation: ___________________________</td>
-            <td>Date: ___________________________</td>
+            <td colspan="2" style="border:none; text-align:left; font-size:13px; padding-bottom:8px;">
+                After having carefully read and accepted your General Conditions, I/We quote you on the item at prices noted above.
+            </td>
         </tr>
     </table>
-    <div class="rfq-footer">
-        <div>PR No.: ___________________________</div>
-        <div>Date Published: ___________________________</div>
-        <div>Closing Date: ___________________________</div>
-        <div>PhilGEPS Ref. No.: ___________________________</div>
-    </div>
+    <div class="rfq-footer" style="margin-top:30px;">
+    <table style="width:100%; border:none; font-size:12px;">
+        <tr>
+            <!-- LEFT: Reference box -->
+            <td style="width:38%; vertical-align:top; border:none;">
+                <table style="border-collapse:collapse; width:70%;">
+                    <tr>
+                        <td colspan="2" style="border:1px solid #000; text-align:left; font-weight:bold; padding:2px 6px;">REFERENCE</td>
+                    </tr>
+                    <tr>
+                        <td style="border:1px solid #000; padding:2px 6px;">PR #</td>
+                        <td style="border:1px solid #000; padding:2px 6px;">DATE</td>
+                    </tr>
+                </table>
+                <div style="margin-top:8px;">
+                    <span style="font-size:11px; font-style:italic;">NSNHS-GSC/BAC</span><br>
+                    <span style="font-size:11px;">PHILGEPS REF. No.</span>
+                    <span style="border-bottom:1px solid #000; display:inline-block; width:110px; vertical-align:middle;"></span>
+                </div>
+            </td>
+            <!-- RIGHT: Signature lines -->
+            <td style="width:62%; border:none; vertical-align:top;">
+                <table style="width:100%; border-collapse:collapse;">
+                    <tr>
+                        <td style="border-bottom:1px solid #000; width:100%;"></td>
+                    </tr>
+                    <tr>
+                        <td style="text-align:center; font-size:12px; padding:0 0 4px 0;">Printed Name/Signature</td>
+                    </tr>
+                    <tr>
+                        <td style="border-bottom:1px solid #000; width:100%;"></td>
+                    </tr>
+                    <tr>
+                        <td style="text-align:center; font-size:12px; padding:0 0 4px 0;">Tel. No./Cellphone No. email address</td>
+                    </tr>
+                    <tr>
+                        <td style="border-bottom:1px solid #000; width:100%;"></td>
+                    </tr>
+                    <tr>
+                        <td style="text-align:center; font-size:12px; padding:0 0 4px 0;">Date</td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <!-- Bottom row: Date Published and Closing Date -->
+            <td style="border:none; padding-top:10px;" colspan="2">
+                <span style="font-size:12px;">Date Published:</span>
+                <span style="border-bottom:1px solid #000; display:inline-block; width:120px; vertical-align:middle;"></span>
+                &nbsp;&nbsp;
+                <span style="font-size:12px;">Closing Date:</span>
+                <span style="border-bottom:1px solid #000; display:inline-block; width:120px; vertical-align:middle;"></span>
+            </td>
+        </tr>
+    </table>
 </div>
 </div>
 </body>
