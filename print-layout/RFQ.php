@@ -173,51 +173,7 @@
             <td></td>
             <td></td>
         </tr>
-        <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-        </tr>
-        <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-        </tr>
-        <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-        </tr>
-        <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-        </tr>
-        <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-        </tr>
+    
         <tr>
             <td></td>
             <td></td>
@@ -233,32 +189,55 @@
     <!-- INSERT THIS BLOCK BELOW -->
     <table style="width:100%; margin-top:18px; margin-bottom:8px; border:none;">
         <tr>
-        <td style="width:30%; vertical-align:top; border:none;">
-            Brand and Model<br>
-            Delivery Period<br>
-            Warranty<br>
-            Price Validity
-        </td>
-        <td style="width:70%; border:none;">
-            <table style="width:100%; border-collapse:collapse;">
-                <tr><td style="border-bottom:1px solid #000;">&nbsp;</td></tr>
-                <tr><td style="border-bottom:1px solid #000;">&nbsp;</td></tr>
-                <tr><td style="border-bottom:1px solid #000;">&nbsp;</td></tr>
-                <tr><td style="border-bottom:1px solid #000;">&nbsp;</td></tr>
-            </table>
-        </td>
+<td colspan="2" style="vertical-align:top; border:none;">
+    <table style="width:100%; margin-top:0; margin-bottom:0; border:none;">
+    <tr>
+    <td style="width:55%; border:none; vertical-align:top;"></td>
+    <td style="width:45%; border:none; vertical-align:top;">
+        <table style="width:100%; border-collapse:collapse;">
+            <tr>
+                <td style="font-size:13px; border:none; padding:2px 0; text-align:left; width:60%;">Brand and Model</td>
+                <td style="border:none; padding:2px 0; width:40%;">
+                    <div style="border-bottom:1px solid #000; width:100%;">&nbsp;</div>
+                </td>
+            </tr>
+            <tr>
+                <td style="font-size:13px; border:none; padding:2px 0; text-align:left;">Delivery Period</td>
+                <td style="border:none; padding:2px 0;">
+                    <div style="border-bottom:1px solid #000; width:100%;">&nbsp;</div>
+                </td>
+            </tr>
+            <tr>
+                <td style="font-size:13px; border:none; padding:2px 0; text-align:left;">Warranty</td>
+                <td style="border:none; padding:2px 0;">
+                    <div style="border-bottom:1px solid #000; width:100%;">&nbsp;</div>
+                </td>
+            </tr>
+            <tr>
+                <td style="font-size:13px; border:none; padding:2px 0; text-align:left;">Price Validity</td>
+                <td style="border:none; padding:2px 0;">
+                    <div style="border-bottom:1px solid #000; width:100%;">&nbsp;</div>
+                </td>
+            </tr>
+        </table>
+    </td>
+</tr>
+</table>
+</td>
     </tr>
         <tr>
-            <td colspan="2" style="border:none; text-align:center; padding-bottom:2px;">
-                <b>New Society National High School</b><br>
-                <span style="font-style:italic; font-size:12px;">Name of the Procuring Entity</span>
-            </td>
-        </tr>
-        <tr>
-            <td colspan="2" style="border:none; text-align:left; font-size:13px; padding-bottom:8px;">
-                After having carefully read and accepted your General Conditions, I/We quote you on the item at prices noted above.
-            </td>
-        </tr>
+   <td colspan="2" style="border:none; padding-bottom:2px;">
+    <div style="font-weight:bold; text-decoration:underline;">New Society National High School</div>
+    <div style="text-align:left; margin-left:45px;">
+        <span style="font-style:italic; font-size:12px;">Name of the Procuring Entity</span>
+    </div>
+</td>
+</tr>
+<tr>
+    <td colspan="2" style="border:none; text-align:left; font-size:13px; padding-bottom:8px;">
+        After having carefully read and accepted your General Conditions, I/We quote you on the item at prices noted above.
+    </td>
+</tr>
     </table>
     <div class="rfq-footer" style="margin-top:30px;">
     <table style="width:100%; border:none; font-size:12px;">

@@ -17,6 +17,16 @@
       <li><a href="principal.php">Principal </a> </li>
    </ul>
   </li>
+
+   <li>
+    <a href="#" class="submenu-toggle">
+      <i class="glyphicon glyphicon-folder-open"></i>
+      <span>Forms</span>
+    </a>
+    <ul class="nav submenu">
+      <li><a href="add_rfq.php">RFQ </a></li>
+   </ul>
+  </li>
   <li>
     <a href="#" class="submenu-toggle">
       <i class="glyphicon glyphicon-user"></i>

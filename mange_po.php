@@ -22,9 +22,9 @@ $all_purchase_orders = find_all('purchase_orders');
     <div class="panel panel-default">
       <div class="panel-heading clearfix">
         <strong>
-          <span class="glyphicon glyphicon-th"></span>
-          <span>Purchase Orders</span>
-        </strong>
+          <span class="glyphicon glyphicon-cog"></span>
+            <span>Manage Purchase Orders</span>
+         </strong>
         <a href="add_po.php" class="btn btn-info pull-right">Add New Purchase Order</a>
       </div>
       <div class="panel-body">
