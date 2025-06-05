@@ -1,7 +1,7 @@
 <?php
   $page_title = 'Edit Account';
   require_once('includes/load.php');
-   page_require_level(3);
+
 ?>
 <?php
 //update user image

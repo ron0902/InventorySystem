@@ -1,6 +1,5 @@
 <?php
 require_once('includes/load.php');
-page_require_level(1);
 
 if (!isset($_GET['supplier_id']) || empty($_GET['supplier_id'])) {
     $session->msg("d", "Missing supplier id.");

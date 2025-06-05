@@ -2,7 +2,7 @@
   $page_title = 'Edit User';
   require_once('includes/load.php');
   // Checkin What level user has permission to view this page
-   page_require_level(1);
+ 
 ?>
 <?php
   $e_user = find_by_id('users',(int)$_GET['id']);

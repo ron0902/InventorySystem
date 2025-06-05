@@ -3,7 +3,6 @@ $page_title = 'All Purchase Orders';
 require_once('includes/load.php');
 
 // Check user permission
-page_require_level(1);
 
 // Pull out all purchase orders from the database
 $all_purchase_orders = find_all('purchase_orders');

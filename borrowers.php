@@ -1,7 +1,6 @@
 <?php
   $page_title = 'All Borrowers';
   require_once('includes/load.php');
-  page_require_level(1);
   $all_borrowers = find_all('borrowers');
 ?>
 

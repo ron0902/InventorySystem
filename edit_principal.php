@@ -1,7 +1,7 @@
 <?php
   $page_title = 'Edit Principal';
   require_once('includes/load.php');
-  page_require_level(1);
+
 
   // Check if principal_id is provided
   if(isset($_GET['principal_id'])){

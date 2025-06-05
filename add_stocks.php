@@ -1,7 +1,7 @@
 <?php
   $page_title = 'Add Stock';
   require_once('includes/load.php');
-  page_require_level(2);
+
 
   // Fetch all POs for the dropdown
   $all_pos = find_all_pos(); // Function to fetch all POs

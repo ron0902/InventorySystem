@@ -1,7 +1,7 @@
 <?php
   $page_title = 'Edit Borrower';
   require_once('includes/load.php');
-  page_require_level(1);
+
 
   // Check if borrower_id is provided
   if(isset($_GET['borrower_id'])){

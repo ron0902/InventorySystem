@@ -3,10 +3,11 @@
   require_once('includes/load.php');
 ?>
 <?php
-// Checkin What level user has permission to view this page
- page_require_level(1);
-//pull out all user form database
- $all_users = find_all_user();
+  $page_title = 'All User';
+  require_once('includes/load.php');
+
+  // Pull out all users from database
+  $all_users = find_all_user();
 ?>
 <?php include_once('layouts/header.php'); ?>
 <div class="row">
@@ -29,9 +30,9 @@
         <thead>
           <tr>
             <th class="text-center" style="width: 50px;">#</th>
-            <th>Name </th>
+            <th>Name</th>
             <th>Username</th>
-            <th class="text-center" style="width: 15%;">User Role</th>
+            <th class="text-center" style="width: 15%;">Role</th>
             <th class="text-center" style="width: 10%;">Status</th>
             <th style="width: 20%;">Last Login</th>
             <th class="text-center" style="width: 100px;">Actions</th>
@@ -43,7 +44,7 @@
            <td class="text-center"><?php echo count_id();?></td>
            <td><?php echo remove_junk(ucwords($a_user['name']))?></td>
            <td><?php echo remove_junk(ucwords($a_user['username']))?></td>
-           <td class="text-center"><?php echo remove_junk(ucwords($a_user['group_name']))?></td>
+           <td class="text-center"><?php echo isset($a_user['role']) ? ucfirst($a_user['role']) : ''; ?></td>
            <td class="text-center">
            <?php if($a_user['status'] === '1'): ?>
             <span class="label label-success"><?php echo "Active"; ?></span>
@@ -70,4 +71,4 @@
     </div>
   </div>
 </div>
-  <?php include_once('layouts/footer.php'); ?>
+<?php include_once('layouts/footer.php'); ?>

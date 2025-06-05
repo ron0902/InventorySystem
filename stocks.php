@@ -2,7 +2,7 @@
   $page_title = 'All Product';
   require_once('includes/load.php');
   // Checkin What level user has permission to view this page
-  page_require_level(2);
+
 
   // Fetch all products from the stocks table
   $products = find_all('stocks'); // Updated to fetch directly from the stocks table

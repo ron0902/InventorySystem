@@ -2,7 +2,6 @@
 $page_title = 'Add Purchase Request';
 require_once 'includes/load.php';
 
-page_require_level(2);
 ?>
 
 <?php

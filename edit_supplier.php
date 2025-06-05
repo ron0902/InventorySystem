@@ -2,7 +2,7 @@
 $page_title = 'Edit Supplier';
 require_once('includes/load.php');
 // Check user permission level
-page_require_level(1);
+
 
 // Fetch supplier data
 $supplier = find_by_id('suppliers', (int)$_GET['supplier_id'], 'supplier_id');

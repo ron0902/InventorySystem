@@ -1,7 +1,6 @@
 <?php
 $page_title = 'Edit Purchase Order';
 require_once 'includes/load.php';
-page_require_level(2); 
 ?>
 
 <?php

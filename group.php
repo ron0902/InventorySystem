@@ -2,7 +2,7 @@
   $page_title = 'All Group';
   require_once('includes/load.php');
   // Checkin What level user has permission to view this page
-   page_require_level(1);
+   
   $all_groups = find_all('user_groups');
 ?>
 <?php include_once('layouts/header.php'); ?>

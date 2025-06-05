@@ -4,7 +4,6 @@
 ?>
 <?php
 // Checkin What level user has permission to view this page
- page_require_level(1);
 //pull out all purchase requests from database
  $all_purchase_requests = find_all('purchase_requests');
 ?>

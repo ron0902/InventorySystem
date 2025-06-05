@@ -1,7 +1,7 @@
 <?php
 $page_title = 'Edit Accounts Payable';
 require_once('includes/load.php');
-page_require_level(1);
+
 
 
 // Get AP by ID, join with invoice table to get the invoice number

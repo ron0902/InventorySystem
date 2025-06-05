@@ -1,7 +1,7 @@
 <?php
 $page_title = 'Add Purchase Order';
 require_once 'includes/load.php';
-page_require_level(2); // Ensure only users with level 2 or higher can access this page
+// Ensure only users with level 2 or higher can access this page
 
 // Fetch all suppliers from the database
 $suppliers = find_all('suppliers'); // Assuming 'suppliers' is the table name

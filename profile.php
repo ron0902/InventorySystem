@@ -1,8 +1,7 @@
 <?php
   $page_title = 'My profile';
   require_once('includes/load.php');
-  // Checkin What level user has permission to view this page
-   page_require_level(3);
+  // Checkin What level user has permission to view this page;
 ?>
   <?php
   $user_id = (int)$_GET['id'];

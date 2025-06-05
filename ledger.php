@@ -1,7 +1,7 @@
 <?php
 $page_title = 'Accounts Payable Ledger';
 require_once('includes/load.php');
-page_require_level(1);
+
 
 // Get the Accounts Payable ID from the URL
 if (!isset($_GET['ap_id']) || empty($_GET['ap_id'])) {

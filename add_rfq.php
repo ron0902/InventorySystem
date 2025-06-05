@@ -2,7 +2,6 @@
 $page_title = 'Add RFQ';
 require_once 'includes/load.php';
 
-page_require_level(2);
 
 // RFQ Insert Logic
 if (isset($_POST['add_rfq'])) {

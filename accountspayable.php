@@ -1,10 +1,6 @@
 <?php
 $page_title = 'Accounts Payable';
 require_once('includes/load.php');
-// Check user permission level
-page_require_level(1);
-
-// Fetch all suppliers, invoices, and purchase orders
 $all_suppliers = find_all('suppliers');
 $all_invoices = find_all('invoices');
 $all_pos = find_all('purchase_orders');

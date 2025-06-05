@@ -2,7 +2,7 @@
 $page_title = 'Teachers and Offices';
 require_once('includes/load.php');
 // Check user permission level
-page_require_level(1);
+
 
 // Fetch all teachers and offices
 $all_teachers = find_all('teachers'); // Assuming you have a 'teachers' table

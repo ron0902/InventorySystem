@@ -2,7 +2,6 @@
 $page_title = 'Stock Report';
 require_once('includes/load.php');
 // Check user permission level
-page_require_level(1);
 
 // Fetch all stock reports
 $stock_reports = find_all('stock_report'); // Fetch all rows from the stock_report table

@@ -1,7 +1,7 @@
 <?php
   $page_title = 'All Suppliers';
   require_once('includes/load.php');
-  page_require_level(1);
+
   $all_suppliers = find_all('suppliers');
 ?>
 

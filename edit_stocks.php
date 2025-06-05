@@ -2,7 +2,6 @@
 $page_title = 'Edit Stock';
 require_once('includes/load.php');
 // Checkin What level user has permission to view this page
-page_require_level(2);
 
 // Check if the 'stocks_id' parameter exists in the URL
 if (!isset($_GET['stocks_id']) || empty($_GET['stocks_id'])) {

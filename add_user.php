@@ -1,40 +1,32 @@
 <?php
   $page_title = 'Add User';
   require_once('includes/load.php');
-  // Checkin What level user has permission to view this page
-  page_require_level(1);
-  $groups = find_all('user_groups');
-?>
-<?php
+
   if(isset($_POST['add_user'])){
 
-   $req_fields = array('full-name','username','password','level' );
+   $req_fields = array('full-name','username','password','role');
    validate_fields($req_fields);
 
-   if(empty($errors)){
-           $name   = remove_junk($db->escape($_POST['full-name']));
-       $username   = remove_junk($db->escape($_POST['username']));
-       $password   = remove_junk($db->escape($_POST['password']));
-       $user_level = (int)$db->escape($_POST['level']);
-       $password = sha1($password);
-        $query = "INSERT INTO users (";
-        $query .="name,username,password,user_level,status";
-        $query .=") VALUES (";
-        $query .=" '{$name}', '{$username}', '{$password}', '{$user_level}','1'";
-        $query .=")";
-        if($db->query($query)){
-          //success
-          $session->msg('s',"User account has been created! ");
-          redirect('add_user.php', false);
-        } else {
-          //failed
-          $session->msg('d',' Sorry failed to create account!');
-          redirect('add_user.php', false);
-        }
-   } else {
-     $session->msg("d", $errors);
-      redirect('add_user.php',permanent: false);
-   }
+  if(empty($errors)){
+    $name   = remove_junk($db->escape($_POST['full-name']));
+    $username   = remove_junk($db->escape($_POST['username']));
+    $password   = remove_junk($db->escape($_POST['password']));
+    $role = remove_junk($db->escape($_POST['role']));
+    $password = sha1($password);
+    $query = "INSERT INTO users (name,username,password,role) VALUES ('{$name}', '{$username}', '{$password}', '{$role}')";
+    if($db->query($query)){
+      //success
+      $session->msg('s',"User account has been created! ");
+      redirect('add_user.php', false);
+    } else {
+      //failed
+      $session->msg('d',' Sorry failed to create account!');
+      redirect('add_user.php', false);
+    }
+} else {
+  $session->msg("d", $errors);
+  redirect('add_user.php',false);
+}
  }
 ?>
 <?php include_once('layouts/header.php'); ?>
@@ -63,11 +55,18 @@
                 <input type="password" class="form-control" name ="password"  placeholder="Password">
             </div>
             <div class="form-group">
-              <label for="level">User Role</label>
-                <select class="form-control" name="level">
-                  <?php foreach ($groups as $group ):?>
-                   <option value="<?php echo $group['group_level'];?>"><?php echo ucwords($group['group_name']);?></option>
-                <?php endforeach;?>
+              <label for="role">User Role</label>
+                <select class="form-control" name="role">
+                  <option value="admin">Admin</option>
+                  <option value="special">Special</option>
+                  <option value="user">User</option>
+                </select>
+            </div>
+            <div class="form-group">
+              <label for="status">Status</label>
+                <select class="form-control" name="status">
+                  <option value="1">Active</option>
+                  <option value="0">Deactive</option>
                 </select>
             </div>
             <div class="form-group clearfix">
@@ -75,10 +74,7 @@
             </div>
         </form>
         </div>
-
       </div>
-
     </div>
   </div>
-
 <?php include_once('layouts/footer.php'); ?>
