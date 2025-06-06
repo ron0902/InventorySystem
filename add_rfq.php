@@ -148,7 +148,7 @@ if (isset($_POST['add_rfq'])) {
                             <th>Company Name</th>
                             <th>Address</th>
                             <th>Status</th>
-                            <th style="width:180px;">Actions</th>
+                            <th style="width:120px;">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -164,10 +164,27 @@ if (isset($_POST['add_rfq'])) {
                             <td><?php echo remove_junk($rfq['company_address']); ?></td>
                             <td><?php echo remove_junk($rfq['status']); ?></td>
                             <td>
-                                <a href="edit_rfq.php?id=<?php echo (int)$rfq['id']; ?>" class="btn btn-warning btn-xs">Edit</a>
-                                <a href="delete_rfq.php?id=<?php echo (int)$rfq['id']; ?>" class="btn btn-danger btn-xs" onclick="return confirm('Are you sure you want to delete this RFQ?');">Delete</a>
-                                <a href="print-layout/RFQ.php?id=<?php echo (int)$rfq['id']; ?>" class="btn btn-success btn-xs" target="_blank">Print</a>
-                            </td>
+                            <a href="edit_rfq.php?id=<?php echo (int)$rfq['id']; ?>" 
+                            class="btn btn-warning btn-xs" 
+                            style="color:white; margin-right:2px;" 
+                            title="Edit">
+                                <span class="glyphicon glyphicon-pencil"></span>
+                            </a>
+                            <a href="delete_rfq.php?id=<?php echo (int)$rfq['id']; ?>" 
+                            class="btn btn-danger btn-xs" 
+                            style="color:white; margin-right:2px;" 
+                            title="Delete"
+                            onclick="return confirm('Are you sure you want to delete this RFQ?');">
+                                <span class="glyphicon glyphicon-remove"></span>
+                            </a>
+                            <a href="print-layout/RFQ.php?id=<?php echo (int)$rfq['id']; ?>" 
+                            class="btn btn-info btn-xs" 
+                            style="color:white;" 
+                            title="Print" 
+                            target="_blank">
+                                <span class="glyphicon glyphicon-print"></span>
+                            </a>
+                        </td>   
                         </tr>
                         <?php endforeach; ?>
                     </tbody>

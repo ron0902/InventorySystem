@@ -25,6 +25,7 @@
     </a>
     <ul class="nav submenu">
       <li><a href="add_rfq.php">RFQ </a></li>
+      <li><a href="add_summary.php">SUMMARY </a></li>
    </ul>
   </li>
   <li>
@@ -56,7 +57,6 @@
       <span>User Management</span>
     </a>
     <ul class="nav submenu">
-      <li><a href="group.php">Manage Groups</a> </li>
       <li><a href="users.php">Manage Users</a> </li>
    </ul>
   </li>
