@@ -125,7 +125,7 @@ body::before {
     text-transform: uppercase;
     letter-spacing: 1px;
     display: inline-block;
-    width: 250px;
+    width: 260px;
     background-color: #db3434;
 }.header-date{
   color: #9b9b9b;
@@ -185,7 +185,7 @@ body::before {
   top: 0;
   padding: 65px 0 0;
   height: 100%;
-  width: 250px;
+  width: 260px;
   background: #272727;
   border-right: 1px solid #ddd;
   text-align: center;

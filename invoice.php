@@ -1,7 +1,6 @@
 <?php
 $page_title = 'Add Invoice';
 require_once('includes/load.php');
-page_require_level(1);
 
 // Fetch suppliers and POs
 $all_suppliers = find_all('suppliers');

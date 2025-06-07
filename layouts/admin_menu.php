@@ -26,6 +26,8 @@
     <ul class="nav submenu">
       <li><a href="add_rfq.php">RFQ </a></li>
       <li><a href="add_summary.php">SUMMARY </a></li>
+      <li><a href="add_abstractofbids.php">ABSTRACT OF BIDS </a></li>
+      <li><a href="add_inspection.php">INSPECTION OF ACCEPTANCE </a></li>
    </ul>
   </li>
   <li>

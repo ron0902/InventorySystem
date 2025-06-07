@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="libs/css/main.css" />
   </head>
   <body>
-  <?php  if ($session->isUserLoggedIn(true)): ?>
+  <?php  if ($session->isUserLoggedIn()): ?>
     <header id="header">
       <div class="logo pull-left"> Inventory System</div>
       <div class="header-content">
