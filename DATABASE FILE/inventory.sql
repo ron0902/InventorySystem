@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 28, 2025 at 07:59 AM
+-- Generation Time: Jun 09, 2025 at 07:58 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -20,6 +20,62 @@ SET time_zone = "+00:00";
 --
 -- Database: `inventory`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `abstractofbids`
+--
+
+CREATE TABLE `abstractofbids` (
+  `id` int(11) NOT NULL,
+  `abstract_no` varchar(50) NOT NULL,
+  `abstract_date` date NOT NULL,
+  `project_name` varchar(255) NOT NULL,
+  `lot` varchar(50) DEFAULT NULL,
+  `pr_number` varchar(50) DEFAULT NULL,
+  `abc` decimal(18,2) DEFAULT NULL,
+  `rfq_number` varchar(50) DEFAULT NULL,
+  `bid_opening` varchar(255) DEFAULT NULL,
+  `status` varchar(50) DEFAULT 'Pending'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `abstractofbids`
+--
+
+INSERT INTO `abstractofbids` (`id`, `abstract_no`, `abstract_date`, `project_name`, `lot`, `pr_number`, `abc`, `rfq_number`, `bid_opening`, `status`) VALUES
+(1, '213', '2025-06-09', '312', '321', '3123', 2131.00, '2312', '312', 'Done');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `abstractofbids_items`
+--
+
+CREATE TABLE `abstractofbids_items` (
+  `id` int(11) NOT NULL,
+  `abstract_id` int(11) NOT NULL,
+  `item_no` int(11) DEFAULT NULL,
+  `particulars` varchar(255) DEFAULT NULL,
+  `unit` varchar(50) DEFAULT NULL,
+  `quantity` int(11) DEFAULT NULL,
+  `unit_cost` decimal(18,2) DEFAULT NULL,
+  `total` decimal(18,2) DEFAULT NULL,
+  `bidder1_unit_cost` decimal(18,2) DEFAULT NULL,
+  `bidder1_total` decimal(18,2) DEFAULT NULL,
+  `bidder2_unit_cost` decimal(18,2) DEFAULT NULL,
+  `bidder2_total` decimal(18,2) DEFAULT NULL,
+  `bidder3_unit_cost` decimal(18,2) DEFAULT NULL,
+  `bidder3_total` decimal(18,2) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `abstractofbids_items`
+--
+
+INSERT INTO `abstractofbids_items` (`id`, `abstract_id`, `item_no`, `particulars`, `unit`, `quantity`, `unit_cost`, `total`, `bidder1_unit_cost`, `bidder1_total`, `bidder2_unit_cost`, `bidder2_total`, `bidder3_unit_cost`, `bidder3_total`) VALUES
+(1, 1, 312, '3123', '123', 12312, 3123.00, 12312.00, 3.00, 3.00, 312321.00, 321.00, 312.00, 321.00);
 
 -- --------------------------------------------------------
 
@@ -44,8 +100,7 @@ CREATE TABLE `accounts_payable` (
 --
 
 INSERT INTO `accounts_payable` (`ap_id`, `supplier_id`, `invoice_id`, `amount`, `due_date`, `status`, `created_at`, `po_id`, `balance`) VALUES
-(13, 3, 7, 1250.00, '2025-05-30', 'Paid', '2025-05-03 15:01:32', 14, 0.00),
-(14, 3, 8, 25000.00, '2025-05-09', 'Paid', '2025-05-03 15:25:35', 15, 0.00);
+(15, 3, 9, 5000.00, '2025-06-09', 'Paid', '2025-06-09 05:54:31', 14, 0.00);
 
 -- --------------------------------------------------------
 
@@ -61,13 +116,6 @@ CREATE TABLE `borrowers` (
   `email` varchar(255) DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-
---
--- Dumping data for table `borrowers`
---
-
-INSERT INTO `borrowers` (`borrower_id`, `name`, `address`, `contact_number`, `email`, `created_at`) VALUES
-(1, 'Ron', 'prk 2 4', '02325434', 'ron@gmail.com', '2025-05-06 06:37:01');
 
 -- --------------------------------------------------------
 
@@ -91,6 +139,41 @@ INSERT INTO `categories` (`id`, `name`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `inspection`
+--
+
+CREATE TABLE `inspection` (
+  `id` int(11) NOT NULL,
+  `supplier` varchar(255) DEFAULT NULL,
+  `iar_no` varchar(50) DEFAULT NULL,
+  `po_no` varchar(50) DEFAULT NULL,
+  `date` date DEFAULT NULL,
+  `invoice_no` varchar(50) DEFAULT NULL,
+  `purpose` text DEFAULT NULL,
+  `date_inspected` date DEFAULT NULL,
+  `date_received` date DEFAULT NULL,
+  `complete` tinyint(1) DEFAULT 0,
+  `quantity` tinyint(1) DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `inspection_items`
+--
+
+CREATE TABLE `inspection_items` (
+  `id` int(11) NOT NULL,
+  `inspection_id` int(11) NOT NULL,
+  `stock_no` varchar(50) DEFAULT NULL,
+  `unit` varchar(50) DEFAULT NULL,
+  `description` text DEFAULT NULL,
+  `quantity` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `invoices`
 --
 
@@ -109,8 +192,7 @@ CREATE TABLE `invoices` (
 --
 
 INSERT INTO `invoices` (`invoice_id`, `invoice_number`, `po_id`, `supplier_id`, `amount`, `due_date`, `status`) VALUES
-(7, '304', 14, 3, 1250.00, '2025-05-09', NULL),
-(8, '203', 15, 3, 25000.00, '2025-05-07', NULL);
+(9, '304', 14, 3, 5000.00, '2025-06-09', NULL);
 
 -- --------------------------------------------------------
 
@@ -151,9 +233,9 @@ CREATE TABLE `ledger` (
 --
 
 INSERT INTO `ledger` (`ledger_id`, `ap_id`, `transaction_type`, `amount`, `balance`, `transaction_date`) VALUES
-(2, 13, 'Payment', 1250.00, 0.00, '2025-05-03 23:18:40'),
-(3, 14, 'Payment', 20000.00, 5000.00, '2025-05-03 23:25:51'),
-(4, 14, 'Payment', 5000.00, 0.00, '2025-05-03 23:26:10');
+(5, 15, 'Initial Entry', 5000.00, 5000.00, '2025-06-09 13:54:31'),
+(6, 15, 'Payment', 3000.00, 2000.00, '2025-06-09 13:54:46'),
+(7, 15, 'Payment', 2000.00, 0.00, '2025-06-09 13:54:59');
 
 -- --------------------------------------------------------
 
@@ -174,7 +256,6 @@ CREATE TABLE `offices` (
 --
 
 INSERT INTO `offices` (`id`, `name`, `contact_number`, `email`, `created_at`) VALUES
-(0, '213', '23', '434@gmail.com', '2025-04-07 04:16:07'),
 (0, '213', '23', '434@gmail.com', '2025-04-07 04:16:07');
 
 -- --------------------------------------------------------
@@ -318,6 +399,66 @@ INSERT INTO `purchase_request_items` (`id`, `purchase_request_id`, `item_descrip
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `rfq`
+--
+
+CREATE TABLE `rfq` (
+  `id` int(11) NOT NULL,
+  `rfq_no` varchar(50) NOT NULL,
+  `rfq_date` date NOT NULL,
+  `company_name` varchar(255) NOT NULL,
+  `company_address` varchar(255) NOT NULL,
+  `status` varchar(50) NOT NULL DEFAULT 'Pending'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `rfq`
+--
+
+INSERT INTO `rfq` (`id`, `rfq_no`, `rfq_date`, `company_name`, `company_address`, `status`) VALUES
+(2, 'RFQ - 23', '2025-06-09', 'Crown', 'Malapatan', 'Received');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `rfq_items`
+--
+
+CREATE TABLE `rfq_items` (
+  `id` int(11) NOT NULL,
+  `rfq_id` int(11) NOT NULL,
+  `item_description` varchar(255) NOT NULL,
+  `unit` varchar(50) NOT NULL,
+  `quantity` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `rfq_items`
+--
+
+INSERT INTO `rfq_items` (`id`, `rfq_id`, `item_description`, `unit`, `quantity`) VALUES
+(3, 2, 'Bugas', '3', 2);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `rfq_summary`
+--
+
+CREATE TABLE `rfq_summary` (
+  `id` int(11) NOT NULL,
+  `rfq_id` int(11) NOT NULL,
+  `establishment_name` varchar(255) NOT NULL,
+  `representative` varchar(255) NOT NULL,
+  `designation` varchar(255) NOT NULL,
+  `date` date NOT NULL,
+  `signature` varchar(255) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `stocks`
 --
 
@@ -338,7 +479,8 @@ CREATE TABLE `stocks` (
 INSERT INTO `stocks` (`stocks_id`, `stock_property_no`, `quantity`, `unit_cost`, `description`, `amount`, `categorie_id`) VALUES
 (6, '14002', 5, 150.00, 'Paint', 750.00, 15),
 (7, '16001', 123, 43.00, '3', 5289.00, 16),
-(8, '16002', 321, 43.00, '213', 13803.00, 15);
+(8, '16002', 321, 43.00, '213', 13803.00, 15),
+(9, '321', 23, 32.00, '343', 0.00, 16);
 
 -- --------------------------------------------------------
 
@@ -398,7 +540,6 @@ CREATE TABLE `teachers` (
 --
 
 INSERT INTO `teachers` (`id`, `name`, `address`, `contact_number`, `email`, `created_at`, `office_id`) VALUES
-(0, '32123', '32', '32', '434@gmail.com', '2025-04-07 04:16:21', 0),
 (0, '32123', '32', '32', '434@gmail.com', '2025-04-07 04:16:21', 0);
 
 -- --------------------------------------------------------
@@ -412,9 +553,9 @@ CREATE TABLE `users` (
   `name` varchar(60) NOT NULL,
   `username` varchar(50) NOT NULL,
   `password` varchar(255) NOT NULL,
-  `user_level` int(11) NOT NULL,
+  `role` varchar(20) NOT NULL DEFAULT 'user',
+  `status` tinyint(1) NOT NULL DEFAULT 1,
   `image` varchar(255) DEFAULT 'no_image.jpg',
-  `status` int(1) NOT NULL,
   `last_login` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
@@ -422,37 +563,27 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `name`, `username`, `password`, `user_level`, `image`, `status`, `last_login`) VALUES
-(1, 'Jm', 'Admin', 'd033e22ae348aeb5660fc2140aec35850c4da997', 1, 'icbdya3s1.png', 1, '2025-05-28 07:03:17'),
-(2, 'John Walker', 'special', 'ba36b97a41e7faf742ab09bf88405ac04f99599a', 2, 'no_image.png', 1, '2025-03-04 18:42:47'),
-(3, 'Christopher', 'User', '12dea96fec20593566ab75692c9949596833adc9', 3, 'no_image.png', 1, '2025-03-04 18:42:20'),
-(5, 'Kevin', 'kevin', '5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8', 3, 'no_image.png', 1, '2021-04-04 19:54:29');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `user_groups`
---
-
-CREATE TABLE `user_groups` (
-  `id` int(11) NOT NULL,
-  `group_name` varchar(150) NOT NULL,
-  `group_level` int(11) NOT NULL,
-  `group_status` int(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
-
---
--- Dumping data for table `user_groups`
---
-
-INSERT INTO `user_groups` (`id`, `group_name`, `group_level`, `group_status`) VALUES
-(1, 'Admin', 1, 1),
-(2, 'Special', 2, 1),
-(3, 'User', 3, 1);
+INSERT INTO `users` (`id`, `name`, `username`, `password`, `role`, `status`, `image`, `last_login`) VALUES
+(6, 'Ron', 'Admin', 'd033e22ae348aeb5660fc2140aec35850c4da997', 'admin', 1, 'hixaky46.JPG', '2025-06-09 07:05:52'),
+(7, 'Ron Oliver', 'admin', 'd033e22ae348aeb5660fc2140aec35850c4da997', 'admin', 1, 'no_image.jpg', NULL),
+(8, 'User', 'user', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'user', 1, 'hbej2sd08.jpg', '2025-06-09 07:05:40');
 
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `abstractofbids`
+--
+ALTER TABLE `abstractofbids`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `abstractofbids_items`
+--
+ALTER TABLE `abstractofbids_items`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `abstract_id` (`abstract_id`);
 
 --
 -- Indexes for table `accounts_payable`
@@ -476,6 +607,19 @@ ALTER TABLE `categories`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `name` (`name`);
 ALTER TABLE `categories` ADD FULLTEXT KEY `name_2` (`name`);
+
+--
+-- Indexes for table `inspection`
+--
+ALTER TABLE `inspection`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `inspection_items`
+--
+ALTER TABLE `inspection_items`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `inspection_id` (`inspection_id`);
 
 --
 -- Indexes for table `invoices`
@@ -534,6 +678,26 @@ ALTER TABLE `purchase_request_items`
   ADD KEY `purchase_request_id` (`purchase_request_id`);
 
 --
+-- Indexes for table `rfq`
+--
+ALTER TABLE `rfq`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `rfq_items`
+--
+ALTER TABLE `rfq_items`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `rfq_id` (`rfq_id`);
+
+--
+-- Indexes for table `rfq_summary`
+--
+ALTER TABLE `rfq_summary`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `rfq_id` (`rfq_id`);
+
+--
 -- Indexes for table `stocks`
 --
 ALTER TABLE `stocks`
@@ -560,31 +724,35 @@ ALTER TABLE `suppliers`
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `user_level` (`user_level`);
-
---
--- Indexes for table `user_groups`
---
-ALTER TABLE `user_groups`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `group_level` (`group_level`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
 --
 
 --
+-- AUTO_INCREMENT for table `abstractofbids`
+--
+ALTER TABLE `abstractofbids`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `abstractofbids_items`
+--
+ALTER TABLE `abstractofbids_items`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT for table `accounts_payable`
 --
 ALTER TABLE `accounts_payable`
-  MODIFY `ap_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `ap_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `borrowers`
 --
 ALTER TABLE `borrowers`
-  MODIFY `borrower_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `borrower_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `categories`
@@ -593,10 +761,22 @@ ALTER TABLE `categories`
   MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
+-- AUTO_INCREMENT for table `inspection`
+--
+ALTER TABLE `inspection`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `inspection_items`
+--
+ALTER TABLE `inspection_items`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT for table `invoices`
 --
 ALTER TABLE `invoices`
-  MODIFY `invoice_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `invoice_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `invoice_items`
@@ -608,7 +788,7 @@ ALTER TABLE `invoice_items`
 -- AUTO_INCREMENT for table `ledger`
 --
 ALTER TABLE `ledger`
-  MODIFY `ledger_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `ledger_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `principals`
@@ -641,10 +821,28 @@ ALTER TABLE `purchase_request_items`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
+-- AUTO_INCREMENT for table `rfq`
+--
+ALTER TABLE `rfq`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `rfq_items`
+--
+ALTER TABLE `rfq_items`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `rfq_summary`
+--
+ALTER TABLE `rfq_summary`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT for table `stocks`
 --
 ALTER TABLE `stocks`
-  MODIFY `stocks_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `stocks_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `stock_report`
@@ -662,17 +860,17 @@ ALTER TABLE `suppliers`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
-
---
--- AUTO_INCREMENT for table `user_groups`
---
-ALTER TABLE `user_groups`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `abstractofbids_items`
+--
+ALTER TABLE `abstractofbids_items`
+  ADD CONSTRAINT `abstractofbids_items_ibfk_1` FOREIGN KEY (`abstract_id`) REFERENCES `abstractofbids` (`id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `accounts_payable`
@@ -681,6 +879,12 @@ ALTER TABLE `accounts_payable`
   ADD CONSTRAINT `accounts_payable_ibfk_2` FOREIGN KEY (`po_id`) REFERENCES `purchase_orders` (`po_id`),
   ADD CONSTRAINT `accounts_payable_ibfk_3` FOREIGN KEY (`supplier_id`) REFERENCES `suppliers` (`supplier_id`),
   ADD CONSTRAINT `accounts_payable_ibfk_4` FOREIGN KEY (`invoice_id`) REFERENCES `invoices` (`invoice_id`);
+
+--
+-- Constraints for table `inspection_items`
+--
+ALTER TABLE `inspection_items`
+  ADD CONSTRAINT `inspection_items_ibfk_1` FOREIGN KEY (`inspection_id`) REFERENCES `inspection` (`id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `invoices`
@@ -715,17 +919,23 @@ ALTER TABLE `purchase_request_items`
   ADD CONSTRAINT `purchase_request_items_ibfk_1` FOREIGN KEY (`purchase_request_id`) REFERENCES `purchase_requests` (`request_id`);
 
 --
+-- Constraints for table `rfq_items`
+--
+ALTER TABLE `rfq_items`
+  ADD CONSTRAINT `rfq_items_ibfk_1` FOREIGN KEY (`rfq_id`) REFERENCES `rfq` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `rfq_summary`
+--
+ALTER TABLE `rfq_summary`
+  ADD CONSTRAINT `rfq_summary_ibfk_1` FOREIGN KEY (`rfq_id`) REFERENCES `rfq` (`id`) ON DELETE CASCADE;
+
+--
 -- Constraints for table `stock_report`
 --
 ALTER TABLE `stock_report`
   ADD CONSTRAINT `stock_report_ibfk_2` FOREIGN KEY (`po_id`) REFERENCES `purchase_orders` (`po_id`),
   ADD CONSTRAINT `stock_report_ibfk_3` FOREIGN KEY (`order_id`) REFERENCES `purchase_order_items` (`order_id`);
-
---
--- Constraints for table `users`
---
-ALTER TABLE `users`
-  ADD CONSTRAINT `FK_user` FOREIGN KEY (`user_level`) REFERENCES `user_groups` (`group_level`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
