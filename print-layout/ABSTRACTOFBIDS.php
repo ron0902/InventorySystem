@@ -20,7 +20,7 @@
         .abstract-container {
             width: 285mm;
             min-height: 190mm;
-            margin: 0 auto;
+            margin: 40px auto 0 auto;
             border: 1px solid #000;
             padding: 18px 10px 10px 10px;
             box-sizing: border-box;

@@ -11,9 +11,9 @@
       <span>Records</span>
     </a>
     <ul class="nav submenu">
-      <li><a href="supplierdetails.php">Supplier  </a> </li>
-      <li><a href="teacherdetails.php">Teacher  </a> </li>
-      <li><a href="borrowers.php">Borrowers  </a> </li>
+      <li><a href="supplierdetails.php">Supplier</a> </li>
+      <li><a href="teacherdetails.php">Teacher</a> </li>
+      <li><a href="borrowers.php">Borrowers </a> </li>
       <li><a href="principal.php">Principal </a> </li>
    </ul>
   </li>
