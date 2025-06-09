@@ -43,7 +43,7 @@
                         unit_cost = VALUES(unit_cost), 
                         description = VALUES(description)";
           if (!$db->query($query)) {
-              $session->msg('d', "Failed to process PO item: " . $db->error);
+              $session->msg('d', "Failed to process PO item: ");
               redirect('add_stocks.php', false);
           }
       }
@@ -69,7 +69,7 @@
       if ($db->query($query)) {
           $session->msg('s', "Product added successfully.");
       } else {
-          $session->msg('d', "Failed to add product: " . $db->error);
+          $session->msg('d', "Failed to add product.");
       }
       redirect('add_stocks.php', false);
   }

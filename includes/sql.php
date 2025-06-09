@@ -61,7 +61,26 @@ function find_by_id($table, $id, $column = null) {
 function delete_by_id($table, $id) {
   global $db;
   if (tableExists($table)) {
-    $primary_key_column = ($table === 'stocks') ? 'stocks_id' : (($table === 'suppliers') ? 'supplier_id' : 'id');
+    // Dynamically determine the primary key column based on the table name
+    switch ($table) {
+      case 'borrowers':
+        $primary_key_column = 'borrower_id';
+        break;
+      case 'suppliers':
+        $primary_key_column = 'supplier_id';
+        break;
+      case 'stocks':
+        $primary_key_column = 'stocks_id';
+        break;
+      case 'principals':
+        $primary_key_column = 'principal_id';
+        break;
+      case 'users':
+        $primary_key_column = 'id';
+        break;
+      default:
+        $primary_key_column = 'id';
+    }
     $sql = "DELETE FROM " . $db->escape($table);
     $sql .= " WHERE {$primary_key_column}=" . $db->escape($id);
     $sql .= " LIMIT 1";

@@ -3,6 +3,18 @@ $page_title = 'Add RFQ';
 require_once 'includes/load.php';
 
 
+// Handle status change
+if (isset($_GET['action']) && $_GET['action'] === 'receive' && isset($_GET['id'])) {
+    $rfq_id = (int)$_GET['id'];
+    $sql = "UPDATE rfq SET status='Received' WHERE id='{$rfq_id}'";
+    if ($db->query($sql)) {
+        $session->msg('s', 'RFQ marked as Received.');
+    } else {
+        $session->msg('d', 'Failed to update RFQ status.');
+    }
+    redirect('add_rfq.php');
+}
+
 // RFQ Insert Logic
 if (isset($_POST['add_rfq'])) {
     $rfq_fields = ['rfq_no', 'rfq_date', 'company_name', 'company_address'];
@@ -148,7 +160,7 @@ if (isset($_POST['add_rfq'])) {
                             <th>Company Name</th>
                             <th>Address</th>
                             <th>Status</th>
-                            <th style="width:120px;">Actions</th>
+                            <th style="width:150px;">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -183,6 +195,13 @@ if (isset($_POST['add_rfq'])) {
                             title="Print" 
                             target="_blank">
                                 <span class="glyphicon glyphicon-print"></span>
+                            </a>
+                            <a href="add_rfq.php?action=receive&id=<?php echo (int)$rfq['id']; ?>"
+                            class="btn btn-success btn-xs"
+                            style="color:white; margin-right:2px;"
+                            title="Mark as Received"
+                            onclick="return confirm('Mark this RFQ as Received?');">
+                                <span class="glyphicon glyphicon-ok"></span>
                             </a>
                         </td>   
                         </tr>

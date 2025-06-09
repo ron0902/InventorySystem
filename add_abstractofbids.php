@@ -2,6 +2,18 @@
 $page_title = 'Add Abstract of Bids';
 require_once 'includes/load.php';
 
+
+// Handle status change
+if (isset($_GET['action']) && $_GET['action'] === 'done' && isset($_GET['id'])) {
+    $abstract_id = (int)$_GET['id'];
+    $sql = "UPDATE abstractofbids SET status='Done' WHERE id='{$abstract_id}'";
+    if ($db->query($sql)) {
+        $session->msg('s', 'Abstract of Bids marked as Done.');
+    } else {
+        $session->msg('d', 'Failed to update status.');
+    }
+    redirect('add_abstractofbids.php');
+}
 // Insert Logic
 if (isset($_POST['add_abstract'])) {
     $fields = ['abstract_no', 'abstract_date', 'project_name', 'lot', 'pr_number', 'abc', 'rfq_number', 'bid_opening'];
@@ -169,7 +181,7 @@ if (isset($_POST['add_abstract'])) {
                             <th>PR Number</th>
                             <th>ABC</th>
                             <th>Status</th>
-                            <th style="width:120px;">Actions</th>
+                            <th style="width:150px;">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -207,6 +219,15 @@ if (isset($_POST['add_abstract'])) {
                                    target="_blank">
                                     <span class="glyphicon glyphicon-print"></span>
                                 </a>
+                                <?php if ($abstract['status'] != 'Done'): ?>
+                                <a href="add_abstractofbids.php?action=done&id=<?php echo (int)$abstract['id']; ?>"
+                                class="btn btn-success btn-xs"
+                                style="color:white; margin-right:2px;"
+                                title="Mark as Done"
+                                onclick="return confirm('Mark this Abstract of Bids as Done?');">
+                                    <span class="glyphicon glyphicon-ok"></span>
+                                </a>
+                                <?php endif; ?>
                             </td>
                         </tr>
                         <?php endforeach; ?>

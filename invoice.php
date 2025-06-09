@@ -10,6 +10,9 @@ $all_pos = find_all('purchase_orders');
 if (isset($_GET['delete_id']) && is_numeric($_GET['delete_id'])) {
     $invoice_id = (int)$_GET['delete_id'];
 
+    // Delete related rows in accounts_payable first
+    $db->query("DELETE FROM accounts_payable WHERE invoice_id = '{$invoice_id}'");
+
     // Delete related rows in the invoice_items table
     $delete_items = "DELETE FROM invoice_items WHERE invoice_id = '{$invoice_id}'";
     if ($db->query($delete_items)) {
@@ -61,7 +64,7 @@ if (isset($_POST['add_invoice'])) {
                     VALUES ('{$supplier_id}', '{$po_id}', '{$invoice_number}', '{$amount}', '{$due_date}')";
 
             if ($db->query($sql)) {
-                $invoice_id = $db->insert_id;
+                $invoice_id = $db->insert_id();
 
                 // Insert items only if arrays are not empty
                 if (!empty($item_descriptions)) {
