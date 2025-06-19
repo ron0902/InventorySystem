@@ -12,7 +12,6 @@ if (isset($_GET['action']) && $_GET['action'] === 'done' && isset($_GET['id'])) 
     }
     redirect('add_abstractofbids.php');
 }
-
 if (!isset($_GET['id'])) {
     $session->msg("d", "Missing abstract id.");
     redirect('add_abstractofbids.php');
